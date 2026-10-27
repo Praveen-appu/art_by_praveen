@@ -1,0 +1,2102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cart | ART_BY_PRAVEEN</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#050505;
+    color:#fff;
+    font-family:Inter,sans-serif;
+    overflow-x:hidden;
+}
+
+/* ================= CURSOR ================= */
+
+.cursor-glow{
+    position:fixed;
+    width:300px;
+    height:300px;
+    border-radius:50%;
+    background:radial-gradient(
+        circle,
+        rgba(255,255,255,.07),
+        transparent 65%
+    );
+    pointer-events:none;
+    transform:translate(-50%,-50%);
+    z-index:0;
+}
+
+/* ================= LOADER ================= */
+
+.loader{
+    position:fixed;
+    inset:0;
+    background:#050505;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:1s ease;
+}
+
+.loader.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader-inner{
+    text-align:center;
+}
+
+.loader-logo{
+    font-family:"Playfair Display",serif;
+    font-size:38px;
+    letter-spacing:8px;
+    animation:pulse 1.5s infinite alternate;
+}
+
+.loader-line{
+    width:180px;
+    height:1px;
+    background:#292929;
+    margin:22px auto;
+    overflow:hidden;
+}
+
+.loader-line span{
+    display:block;
+    width:50%;
+    height:100%;
+    background:#fff;
+    animation:load 1.2s infinite;
+}
+
+@keyframes load{
+    from{
+        transform:translateX(-100%);
+    }
+
+    to{
+        transform:translateX(300%);
+    }
+}
+
+@keyframes pulse{
+    from{
+        opacity:.3;
+    }
+
+    to{
+        opacity:1;
+    }
+}
+
+/* ================= HEADER ================= */
+
+header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:78px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 6%;
+    background:rgba(5,5,5,.75);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+    z-index:1000;
+}
+
+.logo{
+    color:#fff;
+    text-decoration:none;
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+    letter-spacing:4px;
+}
+
+nav{
+    display:flex;
+    gap:30px;
+}
+
+nav a{
+    color:#888;
+    text-decoration:none;
+    font-size:13px;
+    transition:.3s;
+}
+
+nav a:hover,
+nav a.active{
+    color:#fff;
+}
+
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.profile-btn{
+    color:#fff;
+    text-decoration:none;
+    border:1px solid #333;
+    padding:10px 20px;
+    border-radius:30px;
+    font-size:11px;
+    transition:.3s;
+}
+
+.profile-btn:hover{
+    background:#fff;
+    color:#000;
+}
+
+.avatar{
+    width:38px;
+    height:38px;
+    border:1px solid #444;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#111;
+    font-size:13px;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    min-height:390px;
+    padding:160px 6% 70px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero:before{
+    content:"";
+    position:absolute;
+    width:550px;
+    height:550px;
+    border:1px solid rgba(255,255,255,.05);
+    border-radius:50%;
+    right:-180px;
+    top:20px;
+    animation:rotate 25s linear infinite;
+}
+
+.hero:after{
+    content:"";
+    position:absolute;
+    width:300px;
+    height:300px;
+    border:1px solid rgba(255,255,255,.04);
+    border-radius:50%;
+    right:-50px;
+    top:140px;
+    animation:rotate 15s linear infinite reverse;
+}
+
+@keyframes rotate{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero-small{
+    color:#777;
+    font-size:11px;
+    letter-spacing:5px;
+    margin-bottom:22px;
+    animation:fadeUp .8s forwards;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:clamp(60px,8vw,105px);
+    line-height:.9;
+    font-weight:500;
+    letter-spacing:-4px;
+    animation:fadeUp 1s .2s both;
+}
+
+.hero h1 span{
+    color:#777;
+    font-style:italic;
+}
+
+.hero p{
+    color:#888;
+    max-width:550px;
+    margin-top:28px;
+    line-height:1.8;
+    font-size:13px;
+    animation:fadeUp 1s .4s both;
+}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(35px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* ================= CART ================= */
+
+.cart-section{
+    padding:30px 6% 120px;
+    position:relative;
+    z-index:2;
+}
+
+.cart-layout{
+    display:grid;
+    grid-template-columns:1.7fr .9fr;
+    gap:35px;
+}
+
+/* ================= CART ITEMS ================= */
+
+.cart-panel{
+    border:1px solid #202020;
+    background:#090909;
+    padding:30px;
+}
+
+.panel-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-bottom:25px;
+    border-bottom:1px solid #1d1d1d;
+    margin-bottom:10px;
+}
+
+.panel-title{
+    font-family:"Playfair Display",serif;
+    font-size:28px;
+}
+
+.item-count{
+    color:#777;
+    font-size:11px;
+}
+
+.clear-btn{
+    border:1px solid #333;
+    background:transparent;
+    color:#888;
+    padding:8px 14px;
+    border-radius:20px;
+    cursor:pointer;
+    font-size:10px;
+    transition:.3s;
+}
+
+.clear-btn:hover{
+    background:#fff;
+    color:#000;
+}
+
+/* ITEM */
+
+.cart-item{
+    display:grid;
+    grid-template-columns:150px 1fr auto;
+    gap:25px;
+    align-items:center;
+    padding:25px 0;
+    border-bottom:1px solid #1b1b1b;
+    animation:itemIn .6s both;
+}
+
+@keyframes itemIn{
+    from{
+        opacity:0;
+        transform:translateX(-30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+.item-image{
+    width:150px;
+    height:180px;
+    overflow:hidden;
+    background:#111;
+}
+
+.item-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.6s;
+}
+
+.cart-item:hover .item-image img{
+    transform:scale(1.07);
+}
+
+.item-category{
+    color:#777;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:9px;
+    margin-bottom:10px;
+}
+
+.item-title{
+    font-family:"Playfair Display",serif;
+    font-size:24px;
+    margin-bottom:8px;
+}
+
+.item-artist{
+    color:#777;
+    font-size:11px;
+}
+
+.item-medium{
+    color:#555;
+    font-size:11px;
+    margin-top:8px;
+}
+
+.quantity-box{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-top:22px;
+}
+
+.quantity-box button{
+    width:30px;
+    height:30px;
+    border:1px solid #333;
+    background:#111;
+    color:#fff;
+    border-radius:50%;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.quantity-box button:hover{
+    background:#fff;
+    color:#000;
+}
+
+.quantity{
+    font-size:12px;
+    min-width:15px;
+    text-align:center;
+}
+
+.item-price{
+    text-align:right;
+}
+
+.item-total{
+    font-size:20px;
+    font-weight:600;
+}
+
+.remove-btn{
+    margin-top:12px;
+    border:0;
+    background:none;
+    color:#555;
+    cursor:pointer;
+    font-size:10px;
+    text-decoration:underline;
+}
+
+.remove-btn:hover{
+    color:#fff;
+}
+
+/* ================= SUMMARY ================= */
+
+.summary-panel{
+    border:1px solid #202020;
+    background:#090909;
+    padding:30px;
+    height:max-content;
+    position:sticky;
+    top:105px;
+}
+
+.summary-title{
+    font-family:"Playfair Display",serif;
+    font-size:30px;
+    margin-bottom:30px;
+}
+
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    color:#888;
+    font-size:12px;
+    margin-bottom:18px;
+}
+
+.summary-row strong{
+    color:#fff;
+}
+
+.summary-divider{
+    height:1px;
+    background:#222;
+    margin:25px 0;
+}
+
+.total-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.total-row span{
+    color:#888;
+    font-size:12px;
+}
+
+.total-price{
+    font-size:30px;
+    font-weight:700;
+}
+
+.checkout-btn{
+    width:100%;
+    margin-top:30px;
+    height:55px;
+    border:none;
+    background:#fff;
+    color:#000;
+    border-radius:30px;
+    font-weight:700;
+    letter-spacing:1px;
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+    transition:.4s;
+}
+
+.checkout-btn:before{
+    content:"";
+    position:absolute;
+    width:0;
+    height:100%;
+    background:#ddd;
+    left:0;
+    top:0;
+    transition:.4s;
+}
+
+.checkout-btn:hover:before{
+    width:100%;
+}
+
+.checkout-btn span{
+    position:relative;
+    z-index:2;
+}
+
+.continue-btn{
+    display:block;
+    text-align:center;
+    color:#777;
+    text-decoration:none;
+    font-size:11px;
+    margin-top:22px;
+    transition:.3s;
+}
+
+.continue-btn:hover{
+    color:#fff;
+}
+
+/* ================= TRUST ================= */
+
+.trust-box{
+    margin-top:25px;
+    padding-top:25px;
+    border-top:1px solid #1d1d1d;
+}
+
+.trust-item{
+    display:flex;
+    gap:12px;
+    margin-bottom:15px;
+    color:#777;
+    font-size:10px;
+    line-height:1.5;
+}
+
+.trust-icon{
+    width:28px;
+    height:28px;
+    border:1px solid #333;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    flex-shrink:0;
+}
+
+/* ================= EMPTY CART ================= */
+
+.empty-cart{
+    display:none;
+    text-align:center;
+    padding:100px 20px;
+    border:1px solid #202020;
+    background:#090909;
+}
+
+.empty-cart-icon{
+    width:80px;
+    height:80px;
+    border:1px solid #333;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 30px;
+    font-size:28px;
+}
+
+.empty-cart h2{
+    font-family:"Playfair Display",serif;
+    font-size:40px;
+    margin-bottom:15px;
+}
+
+.empty-cart p{
+    color:#666;
+    margin-bottom:30px;
+    font-size:13px;
+}
+
+.shop-btn{
+    display:inline-flex;
+    padding:14px 28px;
+    background:#fff;
+    color:#000;
+    text-decoration:none;
+    border-radius:30px;
+    font-size:11px;
+    font-weight:700;
+}
+
+/* ================= CHECKOUT MODAL ================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.88);
+    backdrop-filter:blur(15px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:5000;
+    opacity:0;
+    visibility:hidden;
+    transition:.4s;
+    padding:20px;
+}
+
+.modal.show{
+    opacity:1;
+    visibility:visible;
+}
+
+.modal-box{
+    width:min(600px,100%);
+    background:#0a0a0a;
+    border:1px solid #333;
+    padding:40px;
+    position:relative;
+    transform:translateY(40px) scale(.95);
+    transition:.5s;
+}
+
+.modal.show .modal-box{
+    transform:translateY(0) scale(1);
+}
+
+.close-modal{
+    position:absolute;
+    right:20px;
+    top:20px;
+    width:38px;
+    height:38px;
+    border:1px solid #333;
+    border-radius:50%;
+    background:#050505;
+    color:#fff;
+    cursor:pointer;
+    font-size:18px;
+}
+
+.modal-box h2{
+    font-family:"Playfair Display",serif;
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.modal-box>p{
+    color:#777;
+    font-size:12px;
+    margin-bottom:30px;
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group label{
+    display:block;
+    color:#777;
+    font-size:10px;
+    letter-spacing:1px;
+    margin-bottom:8px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+    width:100%;
+    background:#111;
+    border:1px solid #292929;
+    color:#fff;
+    padding:14px;
+    outline:none;
+    border-radius:4px;
+    font-family:inherit;
+}
+
+.form-group textarea{
+    resize:none;
+    height:90px;
+}
+
+.place-order{
+    width:100%;
+    height:52px;
+    border:0;
+    background:#fff;
+    color:#000;
+    border-radius:30px;
+    font-weight:700;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+/* ================= SUCCESS ================= */
+
+.success-screen{
+    text-align:center;
+    display:none;
+}
+
+.success-circle{
+    width:80px;
+    height:80px;
+    border:1px solid #fff;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 25px;
+    font-size:30px;
+    animation:successPop .6s;
+}
+
+@keyframes successPop{
+    from{
+        transform:scale(0);
+    }
+
+    to{
+        transform:scale(1);
+    }
+}
+
+.success-screen h2{
+    font-family:"Playfair Display",serif;
+    font-size:38px;
+    margin-bottom:12px;
+}
+
+.success-screen p{
+    color:#777;
+    font-size:12px;
+    line-height:1.7;
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+    bottom:30px;
+    right:30px;
+    background:#fff;
+    color:#000;
+    padding:15px 25px;
+    border-radius:30px;
+    font-size:11px;
+    z-index:8000;
+    transform:translateY(100px);
+    opacity:0;
+    transition:.4s;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    border-top:1px solid #1d1d1d;
+    padding:50px 6%;
+    display:flex;
+    justify-content:space-between;
+    color:#555;
+    font-size:11px;
+}
+
+footer strong{
+    color:#fff;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1000px){
+
+    nav{
+        display:none;
+    }
+
+    .cart-layout{
+        grid-template-columns:1fr;
+    }
+
+    .summary-panel{
+        position:relative;
+        top:0;
+    }
+
+}
+
+@media(max-width:700px){
+
+    header{
+        padding:0 5%;
+    }
+
+    .logo{
+        font-size:17px;
+        letter-spacing:2px;
+    }
+
+    .profile-btn{
+        display:none;
+    }
+
+    .hero{
+        padding:140px 5% 60px;
+    }
+
+    .hero h1{
+        font-size:65px;
+    }
+
+    .cart-section{
+        padding:20px 5% 80px;
+    }
+
+    .cart-panel,
+    .summary-panel{
+        padding:20px;
+    }
+
+    .cart-item{
+        grid-template-columns:100px 1fr;
+        gap:15px;
+    }
+
+    .item-image{
+        width:100px;
+        height:130px;
+    }
+
+    .item-price{
+        grid-column:2;
+        text-align:left;
+        margin-top:-10px;
+    }
+
+    .item-total{
+        font-size:18px;
+    }
+
+    footer{
+        flex-direction:column;
+        gap:15px;
+    }
+
+}
+
+@media(max-width:480px){
+
+    .hero h1{
+        font-size:55px;
+    }
+
+    .panel-title{
+        font-size:23px;
+    }
+
+    .item-title{
+        font-size:19px;
+    }
+
+    .modal-box{
+        padding:25px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="cursor-glow"></div>
+
+
+<!-- LOADER -->
+
+<div class="loader" id="loader">
+
+    <div class="loader-inner">
+
+        <div class="loader-logo">
+            CART
+        </div>
+
+        <div class="loader-line">
+            <span></span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- HEADER -->
+
+<header>
+
+    <a href="index.html" class="logo">
+        ART_BY_PRAVEEN
+    </a>
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="profile.html">
+            Dashboard
+        </a>
+
+        <a href="gallery.html">
+            Gallery
+        </a>
+
+        <a href="booking.html">
+            Book Portrait
+        </a>
+
+        <a href="upload.html">
+            Upload
+        </a>
+
+    </nav>
+
+
+    <div class="header-right">
+
+        <a href="profile.html" class="profile-btn">
+            PROFILE
+        </a>
+
+        <div class="avatar" id="avatar">
+            A
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="hero-small">
+            YOUR ART COLLECTION
+        </div>
+
+        <h1>
+            Your<br>
+            <span>Cart.</span>
+        </h1>
+
+        <p>
+            Your selected artworks are waiting for you.
+            Review your collection, adjust quantities and
+            continue to checkout.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- CART -->
+
+<section class="cart-section">
+
+    <div class="cart-layout">
+
+
+        <!-- ITEMS -->
+
+        <div class="cart-panel">
+
+            <div class="panel-top">
+
+                <div>
+
+                    <div class="panel-title">
+                        Selected Art
+                    </div>
+
+                    <div class="item-count" id="itemCount">
+                        0 items
+                    </div>
+
+                </div>
+
+                <button
+                    class="clear-btn"
+                    onclick="clearCart()"
+                >
+                    CLEAR ALL
+                </button>
+
+            </div>
+
+
+            <div id="cartItems"></div>
+
+        </div>
+
+
+        <!-- SUMMARY -->
+
+        <div class="summary-panel">
+
+            <div class="summary-title">
+                Summary
+            </div>
+
+            <div class="summary-row">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <strong id="subtotal">
+                    ₹0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Shipping
+                </span>
+
+                <strong id="shipping">
+                    FREE
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Tax
+                </span>
+
+                <strong id="tax">
+                    ₹0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-divider"></div>
+
+
+            <div class="total-row">
+
+                <span>
+                    TOTAL
+                </span>
+
+                <div
+                    class="total-price"
+                    id="totalPrice"
+                >
+                    ₹0
+                </div>
+
+            </div>
+
+
+            <button
+                class="checkout-btn"
+                onclick="openCheckout()"
+            >
+                <span>
+                    PROCEED TO CHECKOUT →
+                </span>
+            </button>
+
+
+            <a
+                href="gallery.html"
+                class="continue-btn"
+            >
+                ← Continue Shopping
+            </a>
+
+
+            <div class="trust-box">
+
+                <div class="trust-item">
+
+                    <div class="trust-icon">
+                        ✓
+                    </div>
+
+                    <div>
+                        Secure artwork purchase experience
+                    </div>
+
+                </div>
+
+
+                <div class="trust-item">
+
+                    <div class="trust-icon">
+                        ♢
+                    </div>
+
+                    <div>
+                        Carefully handled artwork delivery
+                    </div>
+
+                </div>
+
+
+                <div class="trust-item">
+
+                    <div class="trust-icon">
+                        ◎
+                    </div>
+
+                    <div>
+                        Direct artist marketplace
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- EMPTY CART -->
+
+    <div
+        class="empty-cart"
+        id="emptyCart"
+    >
+
+        <div class="empty-cart-icon">
+            ♢
+        </div>
+
+        <h2>
+            Your Cart Is Empty
+        </h2>
+
+        <p>
+            Discover a beautiful artwork and add it
+            to your collection.
+        </p>
+
+        <a
+            href="gallery.html"
+            class="shop-btn"
+        >
+            EXPLORE ART
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- CHECKOUT MODAL -->
+
+<div class="modal" id="checkoutModal">
+
+    <div class="modal-box">
+
+        <button
+            class="close-modal"
+            onclick="closeCheckout()"
+        >
+            ×
+        </button>
+
+
+        <div id="checkoutForm">
+
+            <h2>
+                Checkout
+            </h2>
+
+            <p>
+                Enter your delivery details to continue.
+            </p>
+
+
+            <div class="form-group">
+
+                <label>
+                    FULL NAME
+                </label>
+
+                <input
+                    type="text"
+                    id="customerName"
+                    placeholder="Your full name"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    PHONE NUMBER
+                </label>
+
+                <input
+                    type="tel"
+                    id="customerPhone"
+                    placeholder="Your phone number"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    EMAIL
+                </label>
+
+                <input
+                    type="email"
+                    id="customerEmail"
+                    placeholder="Your email"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    DELIVERY ADDRESS
+                </label>
+
+                <textarea
+                    id="customerAddress"
+                    placeholder="House name, place, district, PIN"
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    PAYMENT METHOD
+                </label>
+
+                <select id="paymentMethod">
+
+                    <option value="cod">
+                        Cash on Delivery
+                    </option>
+
+                    <option value="upi">
+                        UPI
+                    </option>
+
+                    <option value="card">
+                        Card / Online Payment
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                class="place-order"
+                onclick="placeOrder()"
+            >
+                PLACE ORDER
+            </button>
+
+        </div>
+
+
+        <!-- SUCCESS -->
+
+        <div
+            class="success-screen"
+            id="successScreen"
+        >
+
+            <div class="success-circle">
+                ✓
+            </div>
+
+            <h2>
+                Order Placed
+            </h2>
+
+            <p>
+                Your artwork order has been created successfully.
+                Our team will contact you with the next steps.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+    class="toast"
+    id="toast"
+>
+    Updated
+</div>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <div>
+        © 2026 <strong>ART_BY_PRAVEEN</strong>
+    </div>
+
+    <div>
+        Art • Portraits • Creativity
+    </div>
+
+</footer>
+
+
+<script>
+
+/* ================= CURSOR ================= */
+
+const cursorGlow =
+    document.querySelector(".cursor-glow");
+
+document.addEventListener("mousemove",function(e){
+
+    cursorGlow.style.left =
+        e.clientX + "px";
+
+    cursorGlow.style.top =
+        e.clientY + "px";
+
+});
+
+
+/* ================= LOADER ================= */
+
+window.addEventListener("load",function(){
+
+    setTimeout(function(){
+
+        document
+            .getElementById("loader")
+            .classList.add("hide");
+
+    },800);
+
+});
+
+
+/* ================= USER ================= */
+
+const savedUser =
+    JSON.parse(
+        localStorage.getItem("artByPraveenUser")
+    );
+
+if(savedUser){
+
+    const letter =
+        savedUser.name
+        ? savedUser.name
+            .charAt(0)
+            .toUpperCase()
+        : "A";
+
+    document.getElementById("avatar")
+        .textContent = letter;
+
+}
+
+
+/* ================= CART DATA ================= */
+
+/*
+   Current gallery's BUY NOW saves
+   selectedArtwork.
+
+   We convert that artwork into
+   our cart.
+*/
+
+let cart =
+    JSON.parse(
+        localStorage.getItem("artByPraveenCart")
+    ) || [];
+
+
+/* ================= SELECTED ARTWORK ================= */
+
+const selectedArtwork =
+    JSON.parse(
+        localStorage.getItem("selectedArtwork")
+    );
+
+
+if(selectedArtwork){
+
+    const exists =
+        cart.find(
+            item => item.id === selectedArtwork.id
+        );
+
+
+    if(exists){
+
+        exists.quantity += 1;
+
+    }else{
+
+        cart.push({
+
+            ...selectedArtwork,
+
+            quantity:1
+
+        });
+
+    }
+
+
+    localStorage.setItem(
+        "artByPraveenCart",
+        JSON.stringify(cart)
+    );
+
+
+    localStorage.removeItem(
+        "selectedArtwork"
+    );
+
+}
+
+
+/* ================= ELEMENTS ================= */
+
+const cartItems =
+    document.getElementById("cartItems");
+
+const emptyCart =
+    document.getElementById("emptyCart");
+
+const cartPanel =
+    document.querySelector(".cart-panel");
+
+const summaryPanel =
+    document.querySelector(".summary-panel");
+
+
+/* ================= RENDER ================= */
+
+function renderCart(){
+
+    cartItems.innerHTML = "";
+
+
+    if(cart.length === 0){
+
+        cartPanel.style.display = "none";
+        summaryPanel.style.display = "none";
+        emptyCart.style.display = "block";
+
+        updateSummary();
+
+        return;
+
+    }
+
+
+    cartPanel.style.display = "block";
+    summaryPanel.style.display = "block";
+    emptyCart.style.display = "none";
+
+
+    cart.forEach((item,index)=>{
+
+        const element =
+            document.createElement("div");
+
+        element.className = "cart-item";
+
+        element.style.animationDelay =
+            (index * .1) + "s";
+
+
+        element.innerHTML = `
+
+            <div class="item-image">
+
+                <img
+                    src="${item.image}"
+                    alt="${escapeHTML(item.title)}"
+                >
+
+            </div>
+
+
+            <div class="item-details">
+
+                <div class="item-category">
+                    ${escapeHTML(item.category || "ARTWORK")}
+                </div>
+
+                <div class="item-title">
+                    ${escapeHTML(item.title)}
+                </div>
+
+                <div class="item-artist">
+                    by ${escapeHTML(item.artist || "Artist")}
+                </div>
+
+                <div class="item-medium">
+                    ${escapeHTML(item.medium || "")}
+                </div>
+
+
+                <div class="quantity-box">
+
+                    <button
+                        onclick="changeQuantity('${item.id}',-1)"
+                    >
+                        −
+                    </button>
+
+                    <div class="quantity">
+                        ${item.quantity}
+                    </div>
+
+                    <button
+                        onclick="changeQuantity('${item.id}',1)"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="item-price">
+
+                <div class="item-total">
+                    ₹${(
+                        Number(item.price || 0)
+                        * item.quantity
+                    ).toLocaleString("en-IN")}
+                </div>
+
+                <button
+                    class="remove-btn"
+                    onclick="removeItem('${item.id}')"
+                >
+                    Remove
+                </button>
+
+            </div>
+
+        `;
+
+
+        cartItems.appendChild(element);
+
+    });
+
+
+    updateSummary();
+
+}
+
+
+/* ================= QUANTITY ================= */
+
+function changeQuantity(id,change){
+
+    const item =
+        cart.find(
+            item => item.id === id
+        );
+
+    if(!item) return;
+
+
+    item.quantity += change;
+
+
+    if(item.quantity <= 0){
+
+        cart =
+            cart.filter(
+                item => item.id !== id
+            );
+
+    }
+
+
+    saveCart();
+    renderCart();
+
+}
+
+
+/* ================= REMOVE ================= */
+
+function removeItem(id){
+
+    cart =
+        cart.filter(
+            item => item.id !== id
+        );
+
+    saveCart();
+    renderCart();
+
+    showToast("Artwork removed");
+
+}
+
+
+/* ================= CLEAR ================= */
+
+function clearCart(){
+
+    if(cart.length === 0) return;
+
+
+    cart = [];
+
+    saveCart();
+    renderCart();
+
+    showToast("Cart cleared");
+
+}
+
+
+/* ================= SAVE ================= */
+
+function saveCart(){
+
+    localStorage.setItem(
+        "artByPraveenCart",
+        JSON.stringify(cart)
+    );
+
+}
+
+
+/* ================= SUMMARY ================= */
+
+function updateSummary(){
+
+    let subtotal = 0;
+
+    let count = 0;
+
+
+    cart.forEach(item=>{
+
+        subtotal +=
+            Number(item.price || 0)
+            * item.quantity;
+
+        count += item.quantity;
+
+    });
+
+
+    /*
+       Demo tax calculation.
+       Later backend/payment can calculate
+       actual tax.
+    */
+
+    const tax =
+        Math.round(subtotal * 0.05);
+
+
+    const total =
+        subtotal + tax;
+
+
+    document.getElementById("itemCount")
+        .textContent =
+        count + (count === 1 ? " item" : " items");
+
+
+    document.getElementById("subtotal")
+        .textContent =
+        "₹" +
+        subtotal.toLocaleString("en-IN");
+
+
+    document.getElementById("tax")
+        .textContent =
+        "₹" +
+        tax.toLocaleString("en-IN");
+
+
+    document.getElementById("totalPrice")
+        .textContent =
+        "₹" +
+        total.toLocaleString("en-IN");
+
+}
+
+
+/* ================= CHECKOUT ================= */
+
+function openCheckout(){
+
+    if(cart.length === 0){
+
+        showToast("Your cart is empty");
+
+        return;
+
+    }
+
+
+    /*
+       Auto-fill registered user data
+    */
+
+    if(savedUser){
+
+        document.getElementById("customerName")
+            .value =
+            savedUser.name || "";
+
+        document.getElementById("customerPhone")
+            .value =
+            savedUser.phone || "";
+
+        document.getElementById("customerEmail")
+            .value =
+            savedUser.email || "";
+
+    }
+
+
+    document.getElementById("checkoutModal")
+        .classList.add("show");
+
+    document.body.style.overflow = "hidden";
+
+}
+
+
+/* ================= CLOSE CHECKOUT ================= */
+
+function closeCheckout(){
+
+    document.getElementById("checkoutModal")
+        .classList.remove("show");
+
+    document.body.style.overflow = "";
+
+}
+
+
+document.getElementById("checkoutModal")
+.addEventListener("click",function(e){
+
+    if(e.target === this){
+
+        closeCheckout();
+
+    }
+
+});
+
+
+/* ================= PLACE ORDER ================= */
+
+function placeOrder(){
+
+    const name =
+        document.getElementById("customerName")
+        .value.trim();
+
+    const phone =
+        document.getElementById("customerPhone")
+        .value.trim();
+
+    const email =
+        document.getElementById("customerEmail")
+        .value.trim();
+
+    const address =
+        document.getElementById("customerAddress")
+        .value.trim();
+
+    const payment =
+        document.getElementById("paymentMethod")
+        .value;
+
+
+    if(
+        !name ||
+        !phone ||
+        !email ||
+        !address
+    ){
+
+        showToast(
+            "Please complete all details"
+        );
+
+        return;
+
+    }
+
+
+    const subtotal =
+        cart.reduce(
+            (sum,item)=>
+                sum +
+                Number(item.price || 0)
+                * item.quantity,
+            0
+        );
+
+
+    const tax =
+        Math.round(subtotal * .05);
+
+
+    const order = {
+
+        id:
+            "ORD-" +
+            Date.now(),
+
+        customer:{
+            name,
+            phone,
+            email,
+            address
+        },
+
+        items:[...cart],
+
+        subtotal,
+
+        tax,
+
+        total:
+            subtotal + tax,
+
+        paymentMethod:payment,
+
+        status:"Pending",
+
+        createdAt:
+            new Date().toISOString()
+
+    };
+
+
+    /*
+       Save order locally for prototype
+    */
+
+    let orders =
+        JSON.parse(
+            localStorage.getItem(
+                "artByPraveenOrders"
+            )
+        ) || [];
+
+
+    orders.push(order);
+
+
+    localStorage.setItem(
+        "artByPraveenOrders",
+        JSON.stringify(orders)
+    );
+
+
+    /* Clear cart */
+
+    cart = [];
+
+    saveCart();
+
+
+    /* Show success */
+
+    document.getElementById("checkoutForm")
+        .style.display = "none";
+
+    document.getElementById("successScreen")
+        .style.display = "block";
+
+
+    setTimeout(()=>{
+
+        closeCheckout();
+
+        renderCart();
+
+        document.getElementById("checkoutForm")
+            .style.display = "block";
+
+        document.getElementById("successScreen")
+            .style.display = "none";
+
+    },3000);
+
+}
+
+
+/* ================= TOAST ================= */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+
+    setTimeout(()=>{
+
+        toast.classList.remove("show");
+
+    },2200);
+
+}
+
+
+/* ================= ESCAPE ================= */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* ================= PARALLAX ================= */
+
+window.addEventListener("scroll",()=>{
+
+    const hero =
+        document.querySelector(".hero-content");
+
+    if(hero){
+
+        hero.style.transform =
+            `translateY(${window.scrollY * .12}px)`;
+
+    }
+
+});
+
+
+/* ================= INITIAL ================= */
+
+renderCart();
+
+
+
+const urlParams =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const buyId =
+    urlParams.get("buyId");
+
+
+if (buyId) {
+
+    const artwork = {
+
+        id: buyId,
+
+        title:
+            urlParams.get("title") ||
+            "Artwork",
+
+        price:
+            Number(
+                urlParams.get("price") || 0
+            ),
+
+        artist:
+            urlParams.get("artist") ||
+            "Artist",
+
+        category:
+            urlParams.get("category") ||
+            "Artwork",
+
+        medium:
+            urlParams.get("medium") ||
+            "Graphite Pencil",
+
+        image:
+            urlParams.get("image") ||
+            "",
+
+        quantity: 1
+
+    };
+
+
+    cart = [artwork];
+
+
+    /* Remove URL parameters */
+
+    window.history.replaceState(
+        {},
+        document.title,
+        "cart.html"
+    );
+
+
+    renderCart();
+
+}
+</script>
+
+</body>
+</html>

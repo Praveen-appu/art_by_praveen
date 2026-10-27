@@ -1,0 +1,2939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Dashboard — Art by Praveen</title>
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#050505;
+    color:#fff;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    background:radial-gradient(
+        circle,
+        rgba(255,255,255,.07),
+        transparent 70%
+    );
+    top:-200px;
+    right:-150px;
+    pointer-events:none;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    background:radial-gradient(
+        circle,
+        rgba(255,255,255,.04),
+        transparent 70%
+    );
+    bottom:-250px;
+    left:-200px;
+    pointer-events:none;
+}
+
+/* =========================
+   LOADER
+========================= */
+
+#loader{
+    position:fixed;
+    inset:0;
+    background:#050505;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+    transition:.6s;
+}
+
+.loader-box{
+    text-align:center;
+}
+
+.loader-logo{
+    font-size:28px;
+    font-weight:800;
+    letter-spacing:7px;
+    margin-bottom:25px;
+}
+
+.loader-line{
+    width:180px;
+    height:2px;
+    background:#222;
+    overflow:hidden;
+    position:relative;
+}
+
+.loader-line::after{
+    content:"";
+    position:absolute;
+    left:-100%;
+    top:0;
+    width:100%;
+    height:100%;
+    background:#fff;
+    animation:loader 1.3s infinite;
+}
+
+@keyframes loader{
+    0%{left:-100%}
+    100%{left:100%}
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:250px;
+    height:100vh;
+    background:#0a0a0a;
+    border-right:1px solid #222;
+    padding:30px 20px;
+    z-index:1000;
+    display:flex;
+    flex-direction:column;
+}
+
+.logo{
+    font-size:20px;
+    font-weight:900;
+    letter-spacing:4px;
+    padding:0 12px;
+    margin-bottom:50px;
+}
+
+.logo span{
+    display:block;
+    font-size:9px;
+    letter-spacing:4px;
+    color:#777;
+    margin-top:7px;
+}
+
+.nav-title{
+    color:#555;
+    font-size:10px;
+    letter-spacing:2px;
+    margin:0 12px 15px;
+}
+
+.nav-link{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    color:#888;
+    text-decoration:none;
+    padding:14px 12px;
+    border-radius:10px;
+    margin-bottom:6px;
+    transition:.3s;
+    font-size:13px;
+}
+
+.nav-link:hover,
+.nav-link.active{
+    background:#171717;
+    color:#fff;
+}
+
+.nav-icon{
+    width:22px;
+    text-align:center;
+    font-size:16px;
+}
+
+.sidebar-bottom{
+    margin-top:auto;
+}
+
+.back-home{
+    border-top:1px solid #222;
+    padding-top:20px;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    margin-left:250px;
+    min-height:100vh;
+    padding:30px 40px 60px;
+}
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:35px;
+}
+
+.page-title h1{
+    font-size:32px;
+    letter-spacing:-1px;
+}
+
+.page-title p{
+    color:#777;
+    margin-top:8px;
+    font-size:13px;
+}
+
+.top-actions{
+    display:flex;
+    gap:10px;
+}
+
+.top-btn{
+    background:#111;
+    border:1px solid #2b2b2b;
+    color:#fff;
+    padding:11px 16px;
+    border-radius:9px;
+    cursor:pointer;
+    transition:.3s;
+    font-size:12px;
+}
+
+.top-btn:hover{
+    background:#fff;
+    color:#000;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:35px;
+}
+
+.stat-card{
+    position:relative;
+    background:linear-gradient(
+        145deg,
+        #111,
+        #080808
+    );
+    border:1px solid #222;
+    border-radius:18px;
+    padding:25px;
+    overflow:hidden;
+    transition:.35s;
+}
+
+.stat-card:hover{
+    transform:translateY(-5px);
+    border-color:#444;
+}
+
+.stat-card::after{
+    content:"";
+    position:absolute;
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    border:1px solid #222;
+    right:-45px;
+    top:-45px;
+}
+
+.stat-label{
+    color:#777;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+.stat-number{
+    font-size:34px;
+    font-weight:800;
+    margin-top:13px;
+}
+
+.stat-small{
+    color:#666;
+    font-size:11px;
+    margin-top:8px;
+}
+
+/* =========================
+   PANEL
+========================= */
+
+.panel{
+    background:#0a0a0a;
+    border:1px solid #222;
+    border-radius:18px;
+    padding:25px;
+    margin-bottom:25px;
+}
+
+.panel-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.panel-title h2{
+    font-size:18px;
+}
+
+.panel-title p{
+    font-size:11px;
+    color:#666;
+    margin-top:6px;
+}
+
+/* =========================
+   FILTERS
+========================= */
+
+.filters{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.search-box{
+    flex:1;
+    min-width:220px;
+    position:relative;
+}
+
+.search-box input{
+    width:100%;
+    background:#111;
+    border:1px solid #292929;
+    color:#fff;
+    padding:13px 15px;
+    border-radius:9px;
+    outline:none;
+}
+
+.search-box input:focus{
+    border-color:#666;
+}
+
+.filter-select{
+    background:#111;
+    border:1px solid #292929;
+    color:#fff;
+    padding:13px 15px;
+    border-radius:9px;
+    outline:none;
+    cursor:pointer;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:900px;
+}
+
+thead{
+    background:#111;
+}
+
+th{
+    color:#666;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    text-align:left;
+    padding:15px 12px;
+    white-space:nowrap;
+}
+
+td{
+    padding:15px 12px;
+    border-bottom:1px solid #1d1d1d;
+    font-size:12px;
+    vertical-align:middle;
+}
+
+tbody tr{
+    transition:.25s;
+}
+
+tbody tr:hover{
+    background:#0f0f0f;
+}
+
+/* =========================
+   CUSTOMER
+========================= */
+
+.customer{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.avatar{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:#181818;
+    border:1px solid #333;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:700;
+    font-size:13px;
+}
+
+.customer-name{
+    font-weight:600;
+}
+
+.customer-email{
+    font-size:10px;
+    color:#666;
+    margin-top:4px;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 9px;
+    border-radius:30px;
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:.7px;
+    border:1px solid #333;
+}
+
+.status::before{
+    content:"";
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:#777;
+}
+
+.status.pending{
+    color:#bbb;
+}
+
+.status.confirmed{
+    color:#fff;
+}
+
+.status.completed{
+    color:#ddd;
+}
+
+.status.cancelled{
+    color:#666;
+}
+
+.status.confirmed::before{
+    background:#fff;
+}
+
+.status.completed::before{
+    background:#aaa;
+}
+
+.status.cancelled::before{
+    background:#444;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.action-buttons{
+    display:flex;
+    gap:7px;
+}
+
+.action-btn{
+    border:1px solid #292929;
+    background:#111;
+    color:#aaa;
+    width:32px;
+    height:32px;
+    border-radius:7px;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.action-btn:hover{
+    background:#fff;
+    color:#000;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+    text-align:center;
+    padding:70px 20px;
+    color:#555;
+}
+
+.empty-icon{
+    font-size:45px;
+    margin-bottom:15px;
+}
+
+.empty h3{
+    color:#aaa;
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+.empty p{
+    font-size:12px;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.82);
+    backdrop-filter:blur(12px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:850px;
+    max-height:90vh;
+    overflow-y:auto;
+    background:#0b0b0b;
+    border:1px solid #333;
+    border-radius:20px;
+    padding:30px;
+    position:relative;
+    animation:modalIn .3s ease;
+}
+
+@keyframes modalIn{
+    from{
+        opacity:0;
+        transform:translateY(25px) scale(.97);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.close{
+    position:absolute;
+    right:20px;
+    top:18px;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    border:1px solid #333;
+    background:#111;
+    color:#fff;
+    cursor:pointer;
+    font-size:17px;
+}
+
+.modal-header{
+    padding-right:50px;
+    border-bottom:1px solid #222;
+    padding-bottom:20px;
+    margin-bottom:25px;
+}
+
+.modal-header h2{
+    font-size:24px;
+}
+
+.modal-header p{
+    color:#666;
+    font-size:11px;
+    margin-top:7px;
+}
+
+.modal-content{
+    display:grid;
+    grid-template-columns:280px 1fr;
+    gap:30px;
+}
+
+.portrait-image{
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    border-radius:15px;
+    background:#151515;
+    border:1px solid #292929;
+}
+
+.detail-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.detail-item{
+    background:#111;
+    border:1px solid #202020;
+    border-radius:10px;
+    padding:13px;
+}
+
+.detail-item.full{
+    grid-column:1/-1;
+}
+
+.detail-label{
+    color:#666;
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:6px;
+}
+
+.detail-value{
+    color:#eee;
+    font-size:12px;
+    word-break:break-word;
+}
+
+.modal-actions{
+    margin-top:25px;
+    padding-top:20px;
+    border-top:1px solid #222;
+    display:flex;
+    gap:10px;
+}
+
+.status-control{
+    flex:1;
+    background:#111;
+    border:1px solid #333;
+    color:#fff;
+    padding:13px;
+    border-radius:8px;
+    outline:none;
+}
+
+.save-status{
+    background:#fff;
+    color:#000;
+    border:none;
+    border-radius:8px;
+    padding:13px 20px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    background:#fff;
+    color:#000;
+    padding:14px 20px;
+    border-radius:10px;
+    font-size:12px;
+    font-weight:600;
+    transform:translateY(100px);
+    opacity:0;
+    transition:.35s;
+    z-index:20000;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+.mobile-menu{
+    display:none;
+}
+
+@media(max-width:1100px){
+
+    .stats-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:800px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.3s;
+        box-shadow:10px 0 40px rgba(0,0,0,.5);
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .mobile-menu{
+        display:flex;
+        position:fixed;
+        top:15px;
+        left:15px;
+        z-index:2000;
+        width:42px;
+        height:42px;
+        border-radius:10px;
+        background:#111;
+        border:1px solid #333;
+        color:#fff;
+        justify-content:center;
+        align-items:center;
+        cursor:pointer;
+    }
+
+    .main{
+        margin-left:0;
+        padding:80px 18px 40px;
+    }
+
+    .topbar{
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .page-title h1{
+        font-size:25px;
+    }
+
+    .top-actions{
+        flex-direction:column;
+    }
+
+    .stats-grid{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .stat-card{
+        padding:18px;
+    }
+
+    .stat-number{
+        font-size:26px;
+    }
+
+    .panel{
+        padding:18px;
+    }
+
+    .modal-content{
+        grid-template-columns:1fr;
+    }
+
+    .portrait-image{
+        max-height:350px;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .stats-grid{
+        grid-template-columns:1fr;
+    }
+
+    .topbar{
+        flex-direction:column;
+    }
+
+    .top-actions{
+        flex-direction:row;
+    }
+
+    .filters{
+        flex-direction:column;
+    }
+
+    .search-box{
+        min-width:100%;
+    }
+
+    .detail-grid{
+        grid-template-columns:1fr;
+    }
+
+    .detail-item.full{
+        grid-column:auto;
+    }
+
+    .modal-actions{
+        flex-direction:column;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =========================
+     LOADER
+========================= -->
+
+<div id="loader">
+
+    <div class="loader-box">
+
+        <div class="loader-logo">
+            ART_BY_PRAVEEN
+        </div>
+
+        <div class="loader-line"></div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     MOBILE MENU
+========================= -->
+
+<button class="mobile-menu" onclick="toggleSidebar()">
+    ☰
+</button>
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="logo">
+
+        ART_BY_PRAVEEN
+
+        <span>ADMIN STUDIO</span>
+
+    </div>
+
+
+    <div class="nav-title">
+        MANAGEMENT
+    </div>
+
+
+    <a href="admin.html" class="nav-link active">
+
+        <span class="nav-icon">⌂</span>
+
+        Dashboard
+
+    </a>
+
+
+    <a href="#bookings" class="nav-link">
+
+        <span class="nav-icon">▣</span>
+
+        Bookings
+
+    </a>
+
+
+    <a href="#orders" class="nav-link">
+
+        <span class="nav-icon">◈</span>
+
+        Orders
+
+    </a>
+
+
+    <a href="#artworks" class="nav-link">
+
+        <span class="nav-icon">✎</span>
+
+        Artworks
+
+    </a>
+
+
+    <div class="sidebar-bottom">
+
+        <div class="back-home">
+
+            <a href="index.html" class="nav-link">
+
+                <span class="nav-icon">←</span>
+
+                Back to Website
+
+            </a>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="main">
+
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <div class="page-title">
+
+            <h1>Admin Dashboard</h1>
+
+            <p>
+                Manage your Art by Praveen marketplace
+            </p>
+
+        </div>
+
+
+        <div class="top-actions">
+
+            <button
+                class="top-btn"
+                onclick="loadDashboard()"
+            >
+                ↻ Refresh
+            </button>
+
+            <button
+                class="top-btn"
+                onclick="exportBookings()"
+            >
+                ↓ Export
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         STATS
+    ========================= -->
+
+    <section class="stats-grid">
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Total Bookings
+            </div>
+
+            <div
+                class="stat-number"
+                id="totalBookings"
+            >
+                0
+            </div>
+
+            <div class="stat-small">
+                All portrait requests
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Pending
+            </div>
+
+            <div
+                class="stat-number"
+                id="pendingBookings"
+            >
+                0
+            </div>
+
+            <div class="stat-small">
+                Need your attention
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Completed
+            </div>
+
+            <div
+                class="stat-number"
+                id="completedBookings"
+            >
+                0
+            </div>
+
+            <div class="stat-small">
+                Finished bookings
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Booking Revenue
+            </div>
+
+            <div
+                class="stat-number"
+                id="totalRevenue"
+            >
+                ₹0
+            </div>
+
+            <div class="stat-small">
+                Total booking value
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =========================
+         BOOKINGS
+    ========================= -->
+
+    <section
+        class="panel"
+        id="bookings"
+    >
+
+        <div class="panel-head">
+
+            <div class="panel-title">
+
+                <h2>Portrait Bookings</h2>
+
+                <p>
+                    Customer portrait requests received from your website
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- FILTER -->
+
+        <div class="filters">
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search customer, booking ID, phone..."
+                    oninput="renderBookings()"
+                >
+
+            </div>
+
+
+            <select
+                class="filter-select"
+                id="statusFilter"
+                onchange="renderBookings()"
+            >
+
+                <option value="all">
+                    All Status
+                </option>
+
+                <option value="Pending">
+                    Pending
+                </option>
+
+                <option value="Confirmed">
+                    Confirmed
+                </option>
+
+                <option value="Completed">
+                    Completed
+                </option>
+
+                <option value="Cancelled">
+                    Cancelled
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- TABLE -->
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Customer
+                        </th>
+
+                        <th>
+                            Booking ID
+                        </th>
+
+                        <th>
+                            Portrait
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Amount
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="bookingTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         QUICK INFO
+    ========================= -->
+
+    <section
+        class="panel"
+        id="orders"
+    >
+
+        <div class="panel-head">
+
+            <div class="panel-title">
+
+                <h2>Marketplace Overview</h2>
+
+                <p>
+                    Quick information from your current browser data
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Artwork Uploads
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="totalArtworks"
+                >
+                    0
+                </div>
+
+                <div class="stat-small">
+                    Uploaded artworks
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Orders
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="totalOrders"
+                >
+                    0
+                </div>
+
+                <div class="stat-small">
+                    Marketplace orders
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Order Revenue
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="orderRevenue"
+                >
+                    ₹0
+                </div>
+
+                <div class="stat-small">
+                    Current order value
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Wishlist
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="totalWishlist"
+                >
+                    0
+                </div>
+
+                <div class="stat-small">
+                    Saved artworks
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ARTWORK -->
+
+    <section
+        class="panel"
+        id="artworks"
+    >
+
+        <div class="panel-head">
+
+            <div class="panel-title">
+
+                <h2>Artwork Library</h2>
+
+                <p>
+                    Artwork uploaded through the marketplace
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="artworkSummary"
+            style="
+                color:#777;
+                font-size:12px;
+                line-height:1.8;
+            "
+        >
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<!-- =========================
+     BOOKING MODAL
+========================= -->
+
+<div
+    class="modal"
+    id="bookingModal"
+>
+
+    <div class="modal-box">
+
+        <button
+            class="close"
+            onclick="closeModal()"
+        >
+            ×
+        </button>
+
+
+        <div class="modal-header">
+
+            <h2 id="modalBookingTitle">
+                Booking Details
+            </h2>
+
+            <p id="modalBookingId">
+                —
+            </p>
+
+        </div>
+
+
+        <div class="modal-content">
+
+
+            <div>
+
+                <img
+                    id="modalImage"
+                    class="portrait-image"
+                    src=""
+                    alt="Portrait"
+                >
+
+            </div>
+
+
+            <div>
+
+                <div class="detail-grid">
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Customer
+                        </div>
+
+                        <div
+                            class="detail-value"
+                            id="modalCustomer"
+                        >
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Phone
+                        </div>
+
+                        <div
+                            class="detail-value"
+                            id="modalPhone"
+                        >
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Email
+                        </div>
+
+                        <div
+                            class="detail-value"
+                            id="modalEmail"
+                        >
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Booking Date
+                        </div>
+
+                        <div
+                            class="detail-value"
+                            id="modalDate"
+                        >
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Portrait Style
+                        </div>
+
+                        <div
+                            class="detail-value"
+                            id="modalStyle"
+                        >
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Size
+                        </div>
+
+                        <div
+                            class="detail-value"
+                            id="modalSize"
+                        >
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Frame
+                        </div>
+
+                        <div
+                            class="detail-value"
+                            id="modalFrame"
+                        >
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Quantity
+                        </div>
+
+                        <div
+                            class="detail-value"
+                            id="modalQuantity"
+                        >
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Delivery
+                        </div>
+
+                        <div
+                            class="detail-value"
+                            id="modalDelivery"
+                        >
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <div class="detail-label">
+                            Total
+                        </div>
+
+                        <div
+                            class="detail-value"
+                            id="modalTotal"
+                        >
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item full">
+
+                        <div class="detail-label">
+                            Address
+                        </div>
+
+                        <div
+                            class="detail-value"
+                            id="modalAddress"
+                        >
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-item full">
+
+                        <div class="detail-label">
+                            Special Instructions
+                        </div>
+
+                        <div
+                            class="detail-value"
+                            id="modalInstructions"
+                        >
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="modal-actions">
+
+                    <select
+                        class="status-control"
+                        id="modalStatus"
+                    >
+
+                        <option value="Pending">
+                            Pending
+                        </option>
+
+                        <option value="Confirmed">
+                            Confirmed
+                        </option>
+
+                        <option value="Completed">
+                            Completed
+                        </option>
+
+                        <option value="Cancelled">
+                            Cancelled
+                        </option>
+
+                    </select>
+
+
+                    <button
+                        class="save-status"
+                        onclick="saveStatus()"
+                    >
+                        Save Status
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     TOAST
+========================= -->
+
+<div
+    class="toast"
+    id="toast"
+>
+</div>
+
+
+<script>
+
+/* =====================================================
+   ADMIN DASHBOARD
+===================================================== */
+
+let bookings = [];
+
+let selectedBookingId = null;
+
+
+/* =====================================================
+   LOAD BOOKINGS
+===================================================== */
+
+function loadBookings(){
+
+    try{
+
+        bookings =
+            JSON.parse(
+                localStorage.getItem(
+                    "artByPraveenBookings"
+                )
+            ) || [];
+
+    }catch(error){
+
+        console.error(error);
+
+        bookings = [];
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD DASHBOARD
+===================================================== */
+
+function loadDashboard(){
+
+    loadBookings();
+
+    updateStats();
+
+    renderBookings();
+
+    loadMarketplaceStats();
+
+}
+
+
+/* =====================================================
+   UPDATE BOOKING STATS
+===================================================== */
+
+function updateStats(){
+
+    const total =
+        bookings.length;
+
+
+    const pending =
+        bookings.filter(
+            b => getStatus(b) === "Pending"
+        ).length;
+
+
+    const completed =
+        bookings.filter(
+            b => getStatus(b) === "Completed"
+        ).length;
+
+
+    const revenue =
+        bookings.reduce(
+            (sum,b) =>
+                sum + Number(
+                    b.total ||
+                    b.totalPrice ||
+                    b.price ||
+                    0
+                ),
+            0
+        );
+
+
+    document.getElementById(
+        "totalBookings"
+    ).textContent = total;
+
+
+    document.getElementById(
+        "pendingBookings"
+    ).textContent = pending;
+
+
+    document.getElementById(
+        "completedBookings"
+    ).textContent = completed;
+
+
+    document.getElementById(
+        "totalRevenue"
+    ).textContent =
+        "₹" + revenue.toLocaleString("en-IN");
+
+}
+
+
+/* =====================================================
+   MARKETPLACE STATS
+===================================================== */
+
+function loadMarketplaceStats(){
+
+    let artworks = [];
+
+    let orders = [];
+
+    let wishlist = [];
+
+
+    try{
+
+        artworks =
+            JSON.parse(
+                localStorage.getItem(
+                    "artByPraveenArtworks"
+                )
+            ) || [];
+
+    }catch(e){}
+
+
+    try{
+
+        orders =
+            JSON.parse(
+                localStorage.getItem(
+                    "artByPraveenOrders"
+                )
+            ) || [];
+
+    }catch(e){}
+
+
+    try{
+
+        wishlist =
+            JSON.parse(
+                localStorage.getItem(
+                    "artByPraveenWishlist"
+                )
+            ) || [];
+
+    }catch(e){}
+
+
+    const orderRevenue =
+        orders.reduce(
+            (sum,order) =>
+                sum + Number(
+                    order.total || 0
+                ),
+            0
+        );
+
+
+    document.getElementById(
+        "totalArtworks"
+    ).textContent =
+        artworks.length;
+
+
+    document.getElementById(
+        "totalOrders"
+    ).textContent =
+        orders.length;
+
+
+    document.getElementById(
+        "orderRevenue"
+    ).textContent =
+        "₹" +
+        orderRevenue.toLocaleString("en-IN");
+
+
+    document.getElementById(
+        "totalWishlist"
+    ).textContent =
+        wishlist.length;
+
+
+    const artworkSummary =
+        document.getElementById(
+            "artworkSummary"
+        );
+
+
+    if(artworks.length === 0){
+
+        artworkSummary.innerHTML =
+            "No artwork has been uploaded yet.";
+
+        return;
+
+    }
+
+
+    artworkSummary.innerHTML =
+        artworks.map(
+            art => `
+
+                <div style="
+                    padding:12px 0;
+                    border-bottom:1px solid #202020;
+                    display:flex;
+                    justify-content:space-between;
+                    gap:15px;
+                ">
+
+                    <span>
+                        ${escapeHTML(
+                            art.title || "Untitled Artwork"
+                        )}
+                    </span>
+
+                    <span style="color:#aaa;">
+                        ₹${Number(
+                            art.price || 0
+                        ).toLocaleString("en-IN")}
+                    </span>
+
+                </div>
+
+            `
+        ).join("");
+
+}
+
+
+/* =====================================================
+   GET STATUS
+===================================================== */
+
+function getStatus(booking){
+
+    return booking.status || "Pending";
+
+}
+
+
+/* =====================================================
+   RENDER BOOKINGS
+===================================================== */
+
+function renderBookings(){
+
+    const table =
+        document.getElementById(
+            "bookingTable"
+        );
+
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        ).value
+        .toLowerCase()
+        .trim();
+
+
+    const filter =
+        document.getElementById(
+            "statusFilter"
+        ).value;
+
+
+    let filtered =
+        bookings.filter(
+            booking => {
+
+                const customer =
+                    booking.customer ||
+                    booking.name ||
+                    booking.user ||
+                    {};
+
+
+                const name =
+                    customer.name ||
+                    booking.name ||
+                    "";
+
+
+                const phone =
+                    customer.phone ||
+                    booking.phone ||
+                    "";
+
+
+                const email =
+                    customer.email ||
+                    booking.email ||
+                    "";
+
+
+                const id =
+                    booking.id ||
+                    booking.bookingId ||
+                    "";
+
+
+                const matchesSearch =
+                    !search ||
+                    name.toLowerCase().includes(search) ||
+                    phone.toLowerCase().includes(search) ||
+                    email.toLowerCase().includes(search) ||
+                    id.toLowerCase().includes(search);
+
+
+                const matchesFilter =
+                    filter === "all" ||
+                    getStatus(booking) === filter;
+
+
+                return matchesSearch &&
+                       matchesFilter;
+
+            }
+        );
+
+
+    if(filtered.length === 0){
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td colspan="7">
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            ✎
+                        </div>
+
+                        <h3>
+                            No bookings found
+                        </h3>
+
+                        <p>
+                            New portrait bookings will appear here.
+                        </p>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    table.innerHTML =
+        filtered.map(
+            booking => createBookingRow(booking)
+        ).join("");
+
+}
+
+
+/* =====================================================
+   CREATE BOOKING ROW
+===================================================== */
+
+function createBookingRow(booking){
+
+    const customer =
+        booking.customer ||
+        {};
+
+
+    const name =
+        customer.name ||
+        booking.name ||
+        "Unknown Customer";
+
+
+    const email =
+        customer.email ||
+        booking.email ||
+        "";
+
+
+    const phone =
+        customer.phone ||
+        booking.phone ||
+        "";
+
+
+    const id =
+        booking.id ||
+        booking.bookingId ||
+        "BOOKING";
+
+
+    const image =
+        booking.portrait?.image ||
+        booking.image ||
+        "";
+
+
+    const date =
+        booking.createdAt ||
+        booking.date ||
+        booking.bookedAt ||
+        "";
+
+
+    const total =
+        booking.total ||
+        booking.totalPrice ||
+        booking.price ||
+        0;
+
+
+    const status =
+        getStatus(booking);
+
+
+    const initials =
+        name
+        .split(" ")
+        .map(
+            word => word.charAt(0)
+        )
+        .join("")
+        .substring(0,2)
+        .toUpperCase();
+
+
+    return `
+
+        <tr>
+
+            <td>
+
+                <div class="customer">
+
+                    <div class="avatar">
+
+                        ${escapeHTML(initials)}
+
+                    </div>
+
+                    <div>
+
+                        <div class="customer-name">
+
+                            ${escapeHTML(name)}
+
+                        </div>
+
+                        <div class="customer-email">
+
+                            ${escapeHTML(
+                                email || phone
+                            )}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </td>
+
+
+            <td>
+
+                <span style="
+                    color:#aaa;
+                    font-size:10px;
+                ">
+
+                    ${escapeHTML(id)}
+
+                </span>
+
+            </td>
+
+
+            <td>
+
+                ${
+                    image
+
+                    ?
+
+                    `<img
+                        src="${image}"
+                        style="
+                            width:42px;
+                            height:42px;
+                            object-fit:cover;
+                            border-radius:7px;
+                            border:1px solid #333;
+                        "
+                    >`
+
+                    :
+
+                    `<div style="
+                        width:42px;
+                        height:42px;
+                        border-radius:7px;
+                        background:#171717;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        color:#555;
+                    ">
+                        —
+                    </div>`
+
+                }
+
+            </td>
+
+
+            <td>
+
+                ${
+                    date
+                    ?
+                    formatDate(date)
+                    :
+                    "—"
+                }
+
+            </td>
+
+
+            <td>
+
+                <strong>
+                    ₹${Number(
+                        total
+                    ).toLocaleString("en-IN")}
+                </strong>
+
+            </td>
+
+
+            <td>
+
+                <span class="
+                    status
+                    ${status.toLowerCase()}
+                ">
+
+                    ${escapeHTML(status)}
+
+                </span>
+
+            </td>
+
+
+            <td>
+
+                <div class="action-buttons">
+
+                    <button
+                        class="action-btn"
+                        title="View"
+                        onclick="viewBooking('${escapeJS(id)}')"
+                    >
+                        👁
+                    </button>
+
+
+                    <button
+                        class="action-btn"
+                        title="Delete"
+                        onclick="deleteBooking('${escapeJS(id)}')"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+            </td>
+
+        </tr>
+
+    `;
+
+}
+
+
+/* =====================================================
+   VIEW BOOKING
+===================================================== */
+
+function viewBooking(id){
+
+    const booking =
+        bookings.find(
+            b =>
+                String(
+                    b.id ||
+                    b.bookingId
+                ) === String(id)
+        );
+
+
+    if(!booking){
+
+        showToast(
+            "Booking not found"
+        );
+
+        return;
+
+    }
+
+
+    selectedBookingId = id;
+
+
+    const customer =
+        booking.customer ||
+        {};
+
+
+    const portrait =
+        booking.portrait ||
+        {};
+
+
+    document.getElementById(
+        "modalBookingTitle"
+    ).textContent =
+        portrait.style ||
+        booking.style ||
+        "Portrait Booking";
+
+
+    document.getElementById(
+        "modalBookingId"
+    ).textContent =
+        booking.id ||
+        booking.bookingId ||
+        "—";
+
+
+    const image =
+        portrait.image ||
+        booking.image ||
+        "";
+
+
+    document.getElementById(
+        "modalImage"
+    ).src =
+        image ||
+        "";
+
+
+    document.getElementById(
+        "modalCustomer"
+    ).textContent =
+        customer.name ||
+        booking.name ||
+        "—";
+
+
+    document.getElementById(
+        "modalPhone"
+    ).textContent =
+        customer.phone ||
+        booking.phone ||
+        "—";
+
+
+    document.getElementById(
+        "modalEmail"
+    ).textContent =
+        customer.email ||
+        booking.email ||
+        "—";
+
+
+    document.getElementById(
+        "modalDate"
+    ).textContent =
+        booking.createdAt
+        ?
+        formatDate(
+            booking.createdAt
+        )
+        :
+        "—";
+
+
+    document.getElementById(
+        "modalStyle"
+    ).textContent =
+        portrait.style ||
+        booking.style ||
+        "—";
+
+
+    document.getElementById(
+        "modalSize"
+    ).textContent =
+        portrait.size ||
+        booking.size ||
+        "—";
+
+
+    document.getElementById(
+        "modalFrame"
+    ).textContent =
+        portrait.frame ||
+        booking.frame ||
+        "—";
+
+
+    document.getElementById(
+        "modalQuantity"
+    ).textContent =
+        portrait.quantity ||
+        booking.quantity ||
+        "1";
+
+
+    document.getElementById(
+        "modalDelivery"
+    ).textContent =
+        portrait.delivery ||
+        booking.delivery ||
+        "—";
+
+
+    document.getElementById(
+        "modalTotal"
+    ).textContent =
+        "₹" +
+        Number(
+            booking.total ||
+            booking.totalPrice ||
+            booking.price ||
+            0
+        ).toLocaleString("en-IN");
+
+
+    document.getElementById(
+        "modalAddress"
+    ).textContent =
+        customer.address ||
+        booking.address ||
+        "—";
+
+
+    document.getElementById(
+        "modalInstructions"
+    ).textContent =
+        booking.instructions ||
+        booking.specialInstructions ||
+        "No special instructions";
+
+
+    document.getElementById(
+        "modalStatus"
+    ).value =
+        getStatus(booking);
+
+
+    document.getElementById(
+        "bookingModal"
+    ).classList.add("show");
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+function closeModal(){
+
+    document.getElementById(
+        "bookingModal"
+    ).classList.remove("show");
+
+    selectedBookingId = null;
+
+}
+
+
+/* =====================================================
+   SAVE STATUS
+===================================================== */
+
+function saveStatus(){
+
+    if(!selectedBookingId){
+
+        return;
+
+    }
+
+
+    const newStatus =
+        document.getElementById(
+            "modalStatus"
+        ).value;
+
+
+    const index =
+        bookings.findIndex(
+            b =>
+                String(
+                    b.id ||
+                    b.bookingId
+                ) ===
+                String(
+                    selectedBookingId
+                )
+        );
+
+
+    if(index === -1){
+
+        showToast(
+            "Booking not found"
+        );
+
+        return;
+
+    }
+
+
+    bookings[index].status =
+        newStatus;
+
+
+    localStorage.setItem(
+        "artByPraveenBookings",
+        JSON.stringify(bookings)
+    );
+
+
+    loadDashboard();
+
+
+    closeModal();
+
+
+    showToast(
+        "Booking status updated"
+    );
+
+}
+
+
+/* =====================================================
+   DELETE BOOKING
+===================================================== */
+
+function deleteBooking(id){
+
+    const booking =
+        bookings.find(
+            b =>
+                String(
+                    b.id ||
+                    b.bookingId
+                ) === String(id)
+        );
+
+
+    if(!booking){
+
+        return;
+
+    }
+
+
+    const customer =
+        booking.customer ||
+        {};
+
+
+    const name =
+        customer.name ||
+        booking.name ||
+        "this customer";
+
+
+    const confirmed =
+        confirm(
+            "Delete booking from " +
+            name +
+            "?\n\nThis action cannot be undone."
+        );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    bookings =
+        bookings.filter(
+            b =>
+                String(
+                    b.id ||
+                    b.bookingId
+                ) !== String(id)
+        );
+
+
+    localStorage.setItem(
+        "artByPraveenBookings",
+        JSON.stringify(bookings)
+    );
+
+
+    loadDashboard();
+
+
+    showToast(
+        "Booking deleted"
+    );
+
+}
+
+
+/* =====================================================
+   EXPORT BOOKINGS
+===================================================== */
+
+function exportBookings(){
+
+    if(bookings.length === 0){
+
+        showToast(
+            "No bookings to export"
+        );
+
+        return;
+
+    }
+
+
+    const rows = [
+
+        [
+            "Booking ID",
+            "Customer",
+            "Phone",
+            "Email",
+            "Style",
+            "Size",
+            "Frame",
+            "Quantity",
+            "Delivery",
+            "Total",
+            "Status",
+            "Date"
+        ]
+
+    ];
+
+
+    bookings.forEach(
+        booking => {
+
+            const customer =
+                booking.customer ||
+                {};
+
+
+            const portrait =
+                booking.portrait ||
+                {};
+
+
+            rows.push([
+
+                booking.id ||
+                booking.bookingId ||
+                "",
+
+                customer.name ||
+                booking.name ||
+                "",
+
+                customer.phone ||
+                booking.phone ||
+                "",
+
+                customer.email ||
+                booking.email ||
+                "",
+
+                portrait.style ||
+                booking.style ||
+                "",
+
+                portrait.size ||
+                booking.size ||
+                "",
+
+                portrait.frame ||
+                booking.frame ||
+                "",
+
+                portrait.quantity ||
+                booking.quantity ||
+                "1",
+
+                portrait.delivery ||
+                booking.delivery ||
+                "",
+
+                booking.total ||
+                booking.totalPrice ||
+                booking.price ||
+                0,
+
+                getStatus(booking),
+
+                booking.createdAt ||
+                ""
+
+            ]);
+
+        }
+    );
+
+
+    const csv =
+        rows
+        .map(
+            row =>
+                row
+                .map(
+                    value =>
+                        `"${String(value)
+                            .replace(/"/g,'""')}"`
+                )
+                .join(",")
+        )
+        .join("\n");
+
+
+    const blob =
+        new Blob(
+            [csv],
+            {
+                type:"text/csv;charset=utf-8;"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const link =
+        document.createElement("a");
+
+
+    link.href = url;
+
+    link.download =
+        "art-by-praveen-bookings.csv";
+
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+
+    URL.revokeObjectURL(url);
+
+
+    showToast(
+        "Bookings exported"
+    );
+
+}
+
+
+/* =====================================================
+   DATE FORMAT
+===================================================== */
+
+function formatDate(date){
+
+    try{
+
+        return new Date(
+            date
+        ).toLocaleDateString(
+            "en-IN",
+            {
+                day:"2-digit",
+                month:"short",
+                year:"numeric"
+            }
+        );
+
+    }catch(e){
+
+        return date;
+
+    }
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   ESCAPE JS
+===================================================== */
+
+function escapeJS(value){
+
+    return String(value)
+        .replace(/\\/g,"\\\\")
+        .replace(/'/g,"\\'")
+        .replace(/"/g,'\\"');
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        () => {
+
+            toast.classList.remove(
+                "show"
+            );
+
+        },
+        2500
+    );
+
+}
+
+
+/* =====================================================
+   MOBILE SIDEBAR
+===================================================== */
+
+function toggleSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+
+}
+
+
+/* =====================================================
+   MODAL OUTSIDE CLICK
+===================================================== */
+
+document
+    .getElementById("bookingModal")
+    .addEventListener(
+        "click",
+        function(e){
+
+            if(
+                e.target === this
+            ){
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   PAGE LOAD
+===================================================== */
+
+window.addEventListener(
+    "load",
+    function(){
+
+        setTimeout(
+            function(){
+
+                document
+                    .getElementById("loader")
+                    .style.opacity = "0";
+
+
+                setTimeout(
+                    function(){
+
+                        document
+                            .getElementById("loader")
+                            .style.display = "none";
+
+                    },
+                    600
+                );
+
+
+            },
+            700
+        );
+
+
+        loadDashboard();
+
+    }
+);
+
+</script>
+
+</body>
+</html>

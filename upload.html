@@ -1,0 +1,2012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Upload Artwork | ART_BY_PRAVEEN</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"Inter",sans-serif;
+    background:#050505;
+    color:#fff;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+
+/* =========================
+   BACKGROUND
+========================= */
+
+body::before{
+    content:"";
+
+    position:fixed;
+
+    width:600px;
+    height:600px;
+
+    left:-250px;
+    top:-250px;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(255,255,255,.07),
+        transparent 65%
+    );
+
+    pointer-events:none;
+
+    z-index:-2;
+}
+
+body::after{
+    content:"";
+
+    position:fixed;
+
+    width:500px;
+    height:500px;
+
+    right:-200px;
+    bottom:-200px;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(255,255,255,.05),
+        transparent 65%
+    );
+
+    pointer-events:none;
+
+    z-index:-2;
+}
+
+
+/* =========================
+   LOADER
+========================= */
+
+.loader{
+    position:fixed;
+    inset:0;
+
+    background:#050505;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    z-index:9999;
+
+    transition:.7s;
+}
+
+.loader.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader-content{
+    text-align:center;
+}
+
+.loader-logo{
+    font-size:25px;
+    font-weight:800;
+    letter-spacing:5px;
+
+    margin-bottom:20px;
+}
+
+.loader-line{
+    width:180px;
+    height:2px;
+
+    background:#222;
+
+    overflow:hidden;
+}
+
+.loader-line span{
+    display:block;
+
+    width:0;
+    height:100%;
+
+    background:#fff;
+
+    animation:loading 1.5s forwards;
+}
+
+@keyframes loading{
+
+    to{
+        width:100%;
+    }
+
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+    position:sticky;
+    top:0;
+
+    height:75px;
+
+    padding:0 50px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    background:rgba(5,5,5,.88);
+
+    backdrop-filter:blur(15px);
+
+    border-bottom:1px solid rgba(255,255,255,.07);
+
+    z-index:1000;
+}
+
+.logo{
+    font-size:18px;
+    font-weight:800;
+    letter-spacing:4px;
+}
+
+.logo span{
+    color:#777;
+}
+
+nav{
+    display:flex;
+    gap:28px;
+}
+
+nav a{
+    color:#666;
+
+    text-decoration:none;
+
+    font-size:12px;
+
+    transition:.3s;
+}
+
+nav a:hover,
+nav a.active{
+    color:#fff;
+}
+
+.user-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.avatar-small{
+    width:36px;
+    height:36px;
+
+    background:#fff;
+    color:#000;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-weight:800;
+    font-size:13px;
+}
+
+.user-name{
+    color:#aaa;
+    font-size:12px;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    text-align:center;
+
+    padding:70px 20px 50px;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.hero small{
+    color:#666;
+
+    font-size:10px;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+
+    font-size:55px;
+
+    margin:15px 0;
+}
+
+.hero h1 span{
+    color:#777;
+}
+
+.hero p{
+    color:#777;
+
+    font-size:13px;
+
+    max-width:520px;
+
+    margin:auto;
+
+    line-height:1.8;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.container{
+    max-width:1150px;
+
+    margin:auto;
+
+    padding:10px 30px 90px;
+}
+
+
+/* =========================
+   UPLOAD LAYOUT
+========================= */
+
+.upload-layout{
+    display:grid;
+
+    grid-template-columns:
+    1fr 1fr;
+
+    gap:25px;
+
+    align-items:start;
+}
+
+
+/* =========================
+   PANEL
+========================= */
+
+.panel{
+    background:#0b0b0b;
+
+    border:1px solid #202020;
+
+    border-radius:20px;
+
+    padding:28px;
+}
+
+.panel-title{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:22px;
+}
+
+.panel-title h2{
+    font-size:18px;
+}
+
+.panel-title span{
+    color:#555;
+
+    font-size:10px;
+
+    letter-spacing:2px;
+}
+
+
+/* =========================
+   UPLOAD BOX
+========================= */
+
+.upload-box{
+    position:relative;
+
+    min-height:430px;
+
+    border:1px dashed #353535;
+
+    border-radius:16px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    overflow:hidden;
+
+    transition:.3s;
+
+    background:#080808;
+}
+
+.upload-box:hover{
+    border-color:#777;
+}
+
+.upload-box.dragging{
+    border-color:#fff;
+
+    background:#111;
+}
+
+.upload-content{
+    padding:25px;
+}
+
+.upload-icon{
+    width:75px;
+    height:75px;
+
+    border-radius:50%;
+
+    border:1px solid #333;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin:0 auto 20px;
+
+    font-size:30px;
+
+    color:#777;
+}
+
+.upload-content h3{
+    font-size:17px;
+
+    margin-bottom:8px;
+}
+
+.upload-content p{
+    color:#666;
+
+    font-size:11px;
+
+    line-height:1.7;
+
+    margin-bottom:20px;
+}
+
+.choose-btn{
+    display:inline-block;
+
+    background:#fff;
+
+    color:#000;
+
+    padding:12px 22px;
+
+    border-radius:9px;
+
+    font-size:11px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.choose-btn:hover{
+    background:#ccc;
+}
+
+.file-info{
+    color:#555;
+
+    font-size:10px;
+
+    margin-top:13px;
+}
+
+
+/* =========================
+   PREVIEW
+========================= */
+
+.preview{
+    display:none;
+
+    position:absolute;
+
+    inset:0;
+
+    background:#080808;
+}
+
+.preview.show{
+    display:block;
+}
+
+.preview img{
+    width:100%;
+    height:100%;
+
+    object-fit:contain;
+
+    padding:15px;
+}
+
+.remove-image{
+    position:absolute;
+
+    right:14px;
+    top:14px;
+
+    width:38px;
+    height:38px;
+
+    border-radius:50%;
+
+    border:1px solid #555;
+
+    background:rgba(0,0,0,.8);
+
+    color:#fff;
+
+    cursor:pointer;
+
+    z-index:5;
+
+    font-size:16px;
+}
+
+.remove-image:hover{
+    background:#fff;
+    color:#000;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-group{
+    margin-bottom:19px;
+}
+
+.form-group label{
+    display:block;
+
+    color:#aaa;
+
+    font-size:11px;
+
+    margin-bottom:8px;
+}
+
+.form-group label span{
+    color:#555;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+
+    background:#101010;
+
+    border:1px solid #252525;
+
+    border-radius:10px;
+
+    padding:14px;
+
+    color:#fff;
+
+    outline:none;
+
+    font-family:inherit;
+
+    font-size:12px;
+
+    transition:.3s;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+    border-color:#666;
+}
+
+textarea{
+    resize:vertical;
+
+    min-height:110px;
+}
+
+select{
+    cursor:pointer;
+}
+
+select option{
+    background:#111;
+    color:#fff;
+}
+
+
+/* =========================
+   TWO COLUMN FORM
+========================= */
+
+.form-row{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+}
+
+
+/* =========================
+   PRICE
+========================= */
+
+.price-input{
+    position:relative;
+}
+
+.price-symbol{
+    position:absolute;
+
+    left:14px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#777;
+
+    font-size:13px;
+}
+
+.price-input input{
+    padding-left:32px;
+}
+
+
+/* =========================
+   CHECKBOX
+========================= */
+
+.checkbox-row{
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:10px;
+
+    margin-top:5px;
+}
+
+.checkbox-row input{
+    width:15px;
+    height:15px;
+
+    margin-top:2px;
+
+    accent-color:#fff;
+}
+
+.checkbox-row label{
+    color:#777;
+
+    font-size:10px;
+
+    line-height:1.6;
+}
+
+
+/* =========================
+   PUBLISH BUTTON
+========================= */
+
+.publish-btn{
+    width:100%;
+
+    border:none;
+
+    background:#fff;
+
+    color:#000;
+
+    padding:16px;
+
+    border-radius:10px;
+
+    font-weight:800;
+
+    font-size:11px;
+
+    letter-spacing:1px;
+
+    cursor:pointer;
+
+    margin-top:12px;
+
+    transition:.3s;
+}
+
+.publish-btn:hover{
+    background:#ccc;
+
+    transform:translateY(-2px);
+}
+
+.publish-btn:disabled{
+    opacity:.5;
+
+    cursor:not-allowed;
+
+    transform:none;
+}
+
+
+/* =========================
+   SUCCESS
+========================= */
+
+.success{
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.82);
+
+    backdrop-filter:blur(12px);
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    z-index:5000;
+
+    padding:20px;
+}
+
+.success.show{
+    display:flex;
+}
+
+.success-box{
+    width:100%;
+    max-width:440px;
+
+    background:#101010;
+
+    border:1px solid #292929;
+
+    border-radius:22px;
+
+    padding:35px;
+
+    text-align:center;
+
+    animation:successIn .45s ease;
+}
+
+@keyframes successIn{
+
+    from{
+        opacity:0;
+        transform:scale(.85) translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1) translateY(0);
+    }
+
+}
+
+.success-icon{
+    width:70px;
+    height:70px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    color:#000;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:30px;
+
+    margin:0 auto 20px;
+
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+
+    0%,100%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.08);
+    }
+
+}
+
+.success-box h2{
+    font-family:"Playfair Display",serif;
+
+    font-size:28px;
+
+    margin-bottom:10px;
+}
+
+.success-box p{
+    color:#777;
+
+    font-size:12px;
+
+    line-height:1.7;
+
+    margin-bottom:25px;
+}
+
+.success-buttons{
+    display:flex;
+
+    gap:10px;
+}
+
+.success-buttons button{
+    flex:1;
+
+    padding:13px;
+
+    border-radius:9px;
+
+    cursor:pointer;
+
+    font-size:10px;
+
+    font-weight:700;
+}
+
+.view-gallery{
+    background:#fff;
+
+    color:#000;
+
+    border:1px solid #fff;
+}
+
+.close-success{
+    background:#151515;
+
+    color:#aaa;
+
+    border:1px solid #292929;
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+.error{
+    display:none;
+
+    color:#ff7777;
+
+    font-size:10px;
+
+    margin-top:7px;
+}
+
+.error.show{
+    display:block;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:850px){
+
+    header{
+        padding:0 20px;
+    }
+
+    nav{
+        display:none;
+    }
+
+    .user-area{
+        display:none;
+    }
+
+    .hero h1{
+        font-size:43px;
+    }
+
+    .upload-layout{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:550px){
+
+    .container{
+        padding:10px 15px 60px;
+    }
+
+    .hero{
+        padding:50px 20px 35px;
+    }
+
+    .hero h1{
+        font-size:37px;
+    }
+
+    .panel{
+        padding:20px;
+    }
+
+    .upload-box{
+        min-height:350px;
+    }
+
+    .form-row{
+        grid-template-columns:1fr;
+    }
+
+    .success-buttons{
+        flex-direction:column;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     LOADER
+========================= -->
+
+<div class="loader" id="loader">
+
+    <div class="loader-content">
+
+        <div class="loader-logo">
+            ART_BY_PRAVEEN
+        </div>
+
+        <div class="loader-line">
+            <span></span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <div class="logo">
+        ART<span>_BY_PRAVEEN</span>
+    </div>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="profile.html">
+            Dashboard
+        </a>
+
+        <a href="gallery.html">
+            Gallery
+        </a>
+
+        <a href="upload.html" class="active">
+            Upload
+        </a>
+
+        <a href="contact.html">
+            Contact
+        </a>
+
+    </nav>
+
+
+    <div class="user-area">
+
+        <div class="avatar-small" id="avatar">
+            A
+        </div>
+
+        <div class="user-name" id="username">
+            Artist
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+    <small>
+        ARTIST STUDIO
+    </small>
+
+    <h1>
+        Upload <span>Your Art.</span>
+    </h1>
+
+    <p>
+        Share your original artwork with the
+        ART_BY_PRAVEEN community and prepare
+        it for sale.
+    </p>
+
+</section>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="container">
+
+    <div class="upload-layout">
+
+
+        <!-- =====================
+             IMAGE UPLOAD
+        ====================== -->
+
+        <div class="panel">
+
+            <div class="panel-title">
+
+                <h2>
+                    Artwork Image
+                </h2>
+
+                <span>
+                    STEP 01
+                </span>
+
+            </div>
+
+
+            <div
+                class="upload-box"
+                id="uploadBox"
+            >
+
+
+                <div
+                    class="upload-content"
+                    id="uploadContent"
+                >
+
+                    <div class="upload-icon">
+                        ↑
+                    </div>
+
+                    <h3>
+                        Upload your artwork
+                    </h3>
+
+                    <p>
+                        Drag & drop your portrait here
+                        or choose an image from your device.
+                        <br>
+                        JPG, JPEG or PNG • Max 10MB
+                    </p>
+
+
+                    <label class="choose-btn">
+
+                        CHOOSE IMAGE
+
+                        <input
+                            type="file"
+                            id="artImage"
+                            accept="image/jpeg,image/png,image/webp"
+                            hidden
+                        >
+
+                    </label>
+
+
+                    <div
+                        class="file-info"
+                        id="fileInfo"
+                    >
+                        No image selected
+                    </div>
+
+                </div>
+
+
+                <!-- PREVIEW -->
+
+                <div
+                    class="preview"
+                    id="preview"
+                >
+
+                    <button
+                        class="remove-image"
+                        onclick="removeImage()"
+                        type="button"
+                    >
+                        ×
+                    </button>
+
+                    <img
+                        id="previewImage"
+                        alt="Artwork Preview"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================
+             DETAILS
+        ====================== -->
+
+        <div class="panel">
+
+            <div class="panel-title">
+
+                <h2>
+                    Artwork Details
+                </h2>
+
+                <span>
+                    STEP 02
+                </span>
+
+            </div>
+
+
+            <form
+                id="artForm"
+            >
+
+
+                <!-- TITLE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Artwork Title
+                        <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        placeholder="Example: Forever Eyes"
+                        maxlength="60"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CATEGORY + MEDIUM -->
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Category
+                        </label>
+
+                        <select
+                            id="category"
+                            required
+                        >
+
+                            <option value="">
+                                Select category
+                            </option>
+
+                            <option value="Portrait">
+                                Portrait
+                            </option>
+
+                            <option value="Pencil Art">
+                                Pencil Art
+                            </option>
+
+                            <option value="Charcoal">
+                                Charcoal
+                            </option>
+
+                            <option value="Nature">
+                                Painting
+                            </option>
+
+                            <option value="Custom">
+                                Custom
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Medium
+                        </label>
+
+                        <select
+                            id="medium"
+                            required
+                        >
+
+                            <option value="">
+                                Select medium
+                            </option>
+
+                            <option value="Graphite Pencil">
+                                Graphite Pencil
+                            </option>
+
+                            <option value="Colour Pencil">
+                                Colour Pencil
+                            </option>
+
+                            <option value="Charcoal">
+                                Charcoal
+                            </option>
+
+                            <option value="Mixed Media">
+                                Mixed Media
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SIZE + PRICE -->
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Artwork Size
+                        </label>
+
+                        <select
+                            id="size"
+                            required
+                        >
+
+                            <option value="">
+                                Select size
+                            </option>
+
+                            <option value="A5">
+                                A5
+                            </option>
+
+                            <option value="A4">
+                                A4
+                            </option>
+
+                            <option value="A3">
+                                A3
+                            </option>
+
+                            <option value="A2">
+                                A2
+                            </option>
+
+                            <option value="Custom Size">
+                                Custom Size
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Selling Price
+                        </label>
+
+                        <div class="price-input">
+
+                            <span class="price-symbol">
+                                ₹
+                            </span>
+
+                            <input
+                                type="number"
+                                id="price"
+                                placeholder="2500"
+                                min="1"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group">
+
+                    <label>
+                        Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        placeholder="Tell buyers about your artwork..."
+                        maxlength="500"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- ORIGINAL -->
+
+                <div class="form-group">
+
+                    <label>
+                        Artwork Type
+                    </label>
+
+                    <select id="artType">
+
+                        <option value="Original Artwork">
+                            Original Artwork
+                        </option>
+
+                        <option value="Art Print">
+                            Art Print
+                        </option>
+
+                        <option value="Custom Portrait">
+                            Custom Portrait
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- CHECKBOX -->
+
+                <div class="checkbox-row">
+
+                    <input
+                        type="checkbox"
+                        id="agree"
+                        required
+                    >
+
+                    <label for="agree">
+
+                        I confirm that this artwork belongs
+                        to me and the information provided is
+                        accurate.
+
+                    </label>
+
+                </div>
+
+
+                <div
+                    class="error"
+                    id="error"
+                >
+                </div>
+
+
+                <!-- PUBLISH -->
+
+                <button
+                    type="submit"
+                    class="publish-btn"
+                    id="publishBtn"
+                >
+
+                    PUBLISH ARTWORK
+
+                </button>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- =========================
+     SUCCESS MODAL
+========================= -->
+
+<div
+    class="success"
+    id="success"
+>
+
+    <div class="success-box">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h2>
+            Artwork Published
+        </h2>
+
+        <p id="successText">
+
+            Your artwork has been successfully
+            added to your collection.
+
+        </p>
+
+
+        <div class="success-buttons">
+
+            <button
+                class="view-gallery"
+                onclick="goGallery()"
+            >
+                VIEW GALLERY
+            </button>
+
+            <button
+                class="close-success"
+                onclick="closeSuccess()"
+            >
+                CLOSE
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   LOADER
+========================= */
+
+window.addEventListener(
+    "load",
+    function(){
+
+        setTimeout(
+            function(){
+
+                document
+                .getElementById("loader")
+                .classList
+                .add("hide");
+
+            },
+            900
+        );
+
+    }
+);
+
+
+/* =========================
+   USER
+========================= */
+
+const savedUser =
+    localStorage.getItem(
+        "artByPraveenUser"
+    );
+
+
+if(!savedUser){
+
+    window.location.href =
+        "login.html";
+
+}else{
+
+    const user =
+        JSON.parse(savedUser);
+
+    const name =
+        user.name || "Artist";
+
+
+    document
+    .getElementById("username")
+    .textContent =
+        name;
+
+
+    document
+    .getElementById("avatar")
+    .textContent =
+        name
+        .trim()
+        .charAt(0)
+        .toUpperCase();
+
+}
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const imageInput =
+    document.getElementById(
+        "artImage"
+    );
+
+const uploadBox =
+    document.getElementById(
+        "uploadBox"
+    );
+
+const uploadContent =
+    document.getElementById(
+        "uploadContent"
+    );
+
+const preview =
+    document.getElementById(
+        "preview"
+    );
+
+const previewImage =
+    document.getElementById(
+        "previewImage"
+    );
+
+const fileInfo =
+    document.getElementById(
+        "fileInfo"
+    );
+
+
+/* =========================
+   IMAGE SELECT
+========================= */
+
+imageInput.addEventListener(
+    "change",
+    function(){
+
+        const file =
+            this.files[0];
+
+        handleImage(file);
+
+    }
+);
+
+
+/* =========================
+   HANDLE IMAGE
+========================= */
+
+function handleImage(file){
+
+    if(!file){
+
+        return;
+
+    }
+
+
+    /* FILE TYPE */
+
+    if(
+        !file.type.startsWith(
+            "image/"
+        )
+    ){
+
+        showError(
+            "Please select a valid image file."
+        );
+
+        imageInput.value = "";
+
+        return;
+
+    }
+
+
+    /* FILE SIZE */
+
+    const maxSize =
+        10 * 1024 * 1024;
+
+
+    if(file.size > maxSize){
+
+        showError(
+            "Image size must be below 10MB."
+        );
+
+        imageInput.value = "";
+
+        return;
+
+    }
+
+
+    /* FILE NAME */
+
+    fileInfo.textContent =
+        file.name;
+
+
+    /* READER */
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function(event){
+
+            previewImage.src =
+                event.target.result;
+
+            preview.classList.add(
+                "show"
+            );
+
+            uploadContent.style.display =
+                "none";
+
+            hideError();
+
+        };
+
+
+    reader.onerror =
+        function(){
+
+            showError(
+                "Could not read the image."
+            );
+
+        };
+
+
+    reader.readAsDataURL(file);
+
+}
+
+
+/* =========================
+   REMOVE IMAGE
+========================= */
+
+function removeImage(){
+
+    imageInput.value = "";
+
+    previewImage.src = "";
+
+    preview.classList.remove(
+        "show"
+    );
+
+    uploadContent.style.display =
+        "block";
+
+    fileInfo.textContent =
+        "No image selected";
+
+}
+
+
+/* =========================
+   DRAG & DROP
+========================= */
+
+uploadBox.addEventListener(
+    "dragover",
+    function(e){
+
+        e.preventDefault();
+
+        uploadBox.classList.add(
+            "dragging"
+        );
+
+    }
+);
+
+
+uploadBox.addEventListener(
+    "dragleave",
+    function(){
+
+        uploadBox.classList.remove(
+            "dragging"
+        );
+
+    }
+);
+
+
+uploadBox.addEventListener(
+    "drop",
+    function(e){
+
+        e.preventDefault();
+
+        uploadBox.classList.remove(
+            "dragging"
+        );
+
+        const file =
+            e.dataTransfer.files[0];
+
+        if(file){
+
+            imageInput.files =
+                e.dataTransfer.files;
+
+            handleImage(file);
+
+        }
+
+    }
+);
+
+
+/* =========================
+   FORM SUBMIT
+========================= */
+
+document
+.getElementById("artForm")
+.addEventListener(
+    "submit",
+    function(e){
+
+        e.preventDefault();
+
+
+        hideError();
+
+
+        /* IMAGE CHECK */
+
+        if(!imageInput.files[0]){
+
+            showError(
+                "Please upload your artwork image first."
+            );
+
+            return;
+
+        }
+
+
+        /* USER */
+
+        const savedUser =
+            localStorage.getItem(
+                "artByPraveenUser"
+            );
+
+
+        const user =
+            savedUser
+            ? JSON.parse(savedUser)
+            : null;
+
+
+        const artistName =
+            user?.name ||
+            "ART_BY_PRAVEEN";
+
+
+        /* FORM DATA */
+
+        const artwork = {
+
+            id:
+                "ART-" +
+                Date.now(),
+
+            title:
+                document
+                .getElementById("title")
+                .value
+                .trim(),
+
+            category:
+                document
+                .getElementById("category")
+                .value,
+
+            medium:
+                document
+                .getElementById("medium")
+                .value,
+
+            size:
+                document
+                .getElementById("size")
+                .value,
+
+            price:
+                Number(
+                    document
+                    .getElementById("price")
+                    .value
+                ),
+
+            description:
+                document
+                .getElementById("description")
+                .value
+                .trim(),
+
+            type:
+                document
+                .getElementById("artType")
+                .value,
+
+            artist:
+                artistName,
+
+            image:
+                previewImage.src,
+
+            createdAt:
+                new Date()
+                .toISOString(),
+
+            status:
+                "Available"
+
+        };
+
+
+        /* GET OLD ARTWORKS */
+
+        let artworks =
+            JSON.parse(
+                localStorage.getItem(
+                    "artByPraveenArtworks"
+                )
+            ) || [];
+
+
+        /* ADD NEW */
+
+        artworks.unshift(
+            artwork
+        );
+
+
+        /* SAVE */
+
+        try{
+
+            localStorage.setItem(
+                "artByPraveenArtworks",
+                JSON.stringify(
+                    artworks
+                )
+            );
+
+        }catch(error){
+
+            showError(
+                "This image is too large to save in browser storage. Please use a smaller image."
+            );
+
+            return;
+
+        }
+
+
+        /* SUCCESS */
+
+        document
+        .getElementById("success")
+        .classList
+        .add("show");
+
+
+        document
+        .getElementById("successText")
+        .textContent =
+            '"' +
+            artwork.title +
+            " has been published successfully.";
+
+        document
+        .getElementById("artForm")
+        .reset();
+
+
+        removeImage();
+
+    }
+);
+
+
+/* =========================
+   ERROR
+========================= */
+
+function showError(message){
+
+    const error =
+        document
+        .getElementById("error");
+
+    error.textContent =
+        message;
+
+    error.classList.add(
+        "show"
+    );
+
+}
+
+function hideError(){
+
+    document
+    .getElementById("error")
+    .classList
+    .remove("show");
+
+}
+
+
+/* =========================
+   SUCCESS
+========================= */
+
+function closeSuccess(){
+
+    document
+    .getElementById("success")
+    .classList
+    .remove("show");
+
+}
+
+
+function goGallery(){
+
+    window.location.href =
+        "gallery.html";
+
+}
+
+</script>
+
+
+</body>
+</html>

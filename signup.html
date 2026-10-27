@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Create Account | Art_by_praveen</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    background:#080808;
+    color:#fff;
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.background{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+}
+
+.glow{
+    position:absolute;
+    width:550px;
+    height:550px;
+    border-radius:50%;
+    background:radial-gradient(
+        circle,
+        rgba(255,255,255,.07),
+        transparent 70%
+    );
+    right:-180px;
+    top:10%;
+}
+
+.glow2{
+    position:absolute;
+    width:450px;
+    height:450px;
+    border-radius:50%;
+    background:radial-gradient(
+        circle,
+        rgba(255,255,255,.04),
+        transparent 70%
+    );
+    left:-180px;
+    bottom:-150px;
+}
+
+/* =========================
+   PARTICLES
+========================= */
+
+.particle{
+    position:absolute;
+    width:3px;
+    height:3px;
+    background:#777;
+    border-radius:50%;
+    opacity:.4;
+    animation:float 7s ease-in-out infinite;
+}
+
+.p1{left:10%;top:15%;}
+.p2{left:20%;top:70%;animation-delay:2s;}
+.p3{left:80%;top:20%;animation-delay:1s;}
+.p4{left:90%;top:70%;animation-delay:3s;}
+.p5{left:50%;top:10%;animation-delay:4s;}
+.p6{left:60%;top:90%;animation-delay:2s;}
+
+@keyframes float{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-25px);
+    }
+
+}
+
+/* =========================
+   BACK HOME
+========================= */
+
+.back-home{
+    position:absolute;
+    top:28px;
+    left:35px;
+    color:#888;
+    text-decoration:none;
+    font-size:11px;
+    letter-spacing:1px;
+    z-index:20;
+    transition:.3s;
+}
+
+.back-home:hover{
+    color:#fff;
+    transform:translateX(-5px);
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.container{
+    min-height:100vh;
+    display:grid;
+    grid-template-columns:1fr 1.2fr;
+    position:relative;
+    z-index:2;
+}
+
+/* =========================
+   LEFT VISUAL
+========================= */
+
+.visual{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    border-right:1px solid #222;
+}
+
+.visual-content{
+    text-align:center;
+    position:relative;
+    z-index:5;
+}
+
+.brand{
+    font-family:'Cormorant Garamond',serif;
+    font-size:52px;
+    letter-spacing:4px;
+}
+
+.brand span{
+    color:#777;
+}
+
+.tagline{
+    color:#777;
+    font-size:10px;
+    letter-spacing:5px;
+    margin-top:12px;
+}
+
+/* =========================
+   SKETCH CIRCLE
+========================= */
+
+.sketch-circle{
+    position:absolute;
+    width:470px;
+    height:470px;
+    border:1px solid #292929;
+    border-radius:50%;
+    animation:rotate 25s linear infinite;
+}
+
+.sketch-circle::before{
+    content:"";
+    position:absolute;
+    inset:40px;
+    border:1px dashed #333;
+    border-radius:50%;
+}
+
+@keyframes rotate{
+
+    from{
+        transform:rotate(0);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+/* =========================
+   PENCIL
+========================= */
+
+.pencil{
+    position:absolute;
+    width:250px;
+    height:8px;
+    background:linear-gradient(
+        90deg,
+        #222,
+        #999,
+        #eee,
+        #444
+    );
+    transform:rotate(-45deg);
+    opacity:.35;
+    animation:pencilFloat 5s ease-in-out infinite;
+}
+
+.pencil::after{
+    content:"";
+    position:absolute;
+    right:-18px;
+    top:-4px;
+    border-left:20px solid #c4a77d;
+    border-top:8px solid transparent;
+    border-bottom:8px solid transparent;
+}
+
+@keyframes pencilFloat{
+
+    0%,100%{
+        transform:rotate(-45deg) translate(0);
+    }
+
+    50%{
+        transform:rotate(-45deg) translate(25px,-20px);
+    }
+
+}
+
+/* =========================
+   FORM AREA
+========================= */
+
+.form-area{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:70px 7%;
+}
+
+.form-box{
+    width:100%;
+    max-width:560px;
+    animation:appear .9s ease forwards;
+}
+
+@keyframes appear{
+
+    from{
+        opacity:0;
+        transform:translateY(35px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+.form-label{
+    color:#777;
+    font-size:10px;
+    letter-spacing:4px;
+    margin-bottom:10px;
+}
+
+.form-box h1{
+    font-family:'Cormorant Garamond',serif;
+    font-size:58px;
+    font-weight:500;
+}
+
+.description{
+    color:#777;
+    font-size:12px;
+    line-height:1.7;
+    margin-top:8px;
+    margin-bottom:28px;
+}
+
+/* =========================
+   FORM GRID
+========================= */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.full{
+    grid-column:1 / -1;
+}
+
+.input-group{
+    position:relative;
+}
+
+.input-group input,
+.input-group select{
+    width:100%;
+    height:52px;
+    background:#111;
+    border:1px solid #292929;
+    outline:none;
+    color:#fff;
+    padding:0 16px;
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    transition:.3s;
+}
+
+.input-group select{
+    appearance:none;
+    cursor:pointer;
+}
+
+.input-group input:focus,
+.input-group select:focus{
+    border-color:#777;
+    background:#141414;
+}
+
+.input-group label{
+    position:absolute;
+    left:16px;
+    top:17px;
+    color:#666;
+    font-size:11px;
+    pointer-events:none;
+    transition:.3s;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label{
+    top:-7px;
+    left:10px;
+    padding:0 7px;
+    background:#080808;
+    color:#aaa;
+    font-size:9px;
+}
+
+/* =========================
+   PASSWORD
+========================= */
+
+.password-wrap{
+    position:relative;
+}
+
+.show-password{
+    position:absolute;
+    right:14px;
+    top:18px;
+    color:#666;
+    font-size:9px;
+    cursor:pointer;
+}
+
+.show-password:hover{
+    color:#fff;
+}
+
+/* =========================
+   ROLE
+========================= */
+
+.role-title{
+    color:#777;
+    font-size:10px;
+    letter-spacing:2px;
+    margin:25px 0 12px;
+}
+
+.role-options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.role{
+    position:relative;
+}
+
+.role input{
+    display:none;
+}
+
+.role label{
+    display:block;
+    border:1px solid #292929;
+    background:#111;
+    padding:18px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.role label strong{
+    display:block;
+    font-family:'Cormorant Garamond',serif;
+    font-size:23px;
+    font-weight:500;
+}
+
+.role label span{
+    display:block;
+    color:#666;
+    font-size:10px;
+    margin-top:5px;
+}
+
+.role input:checked + label{
+    border-color:#fff;
+    background:#eee;
+    color:#000;
+}
+
+.role input:checked + label span{
+    color:#555;
+}
+
+/* =========================
+   TERMS
+========================= */
+
+.terms{
+    display:flex;
+    align-items:flex-start;
+    gap:9px;
+    color:#666;
+    font-size:10px;
+    line-height:1.6;
+    margin:22px 0;
+}
+
+.terms input{
+    margin-top:2px;
+    accent-color:#fff;
+}
+
+.terms a{
+    color:#aaa;
+}
+
+/* =========================
+   SIGNUP BUTTON
+========================= */
+
+.signup-btn{
+    width:100%;
+    height:54px;
+    border:none;
+    background:#fff;
+    color:#000;
+    font-size:10px;
+    letter-spacing:2px;
+    cursor:pointer;
+    transition:.35s;
+}
+
+.signup-btn:hover{
+    background:#ddd;
+    transform:translateY(-3px);
+    box-shadow:0 15px 30px rgba(255,255,255,.08);
+}
+
+/* =========================
+   LOGIN LINK
+========================= */
+
+.login-link{
+    text-align:center;
+    margin-top:22px;
+    color:#666;
+    font-size:11px;
+}
+
+.login-link a{
+    color:#fff;
+    text-decoration:none;
+    margin-left:5px;
+}
+
+.login-link a:hover{
+    text-decoration:underline;
+}
+
+/* =========================
+   SUCCESS MODAL
+========================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.82);
+    backdrop-filter:blur(10px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    opacity:0;
+    visibility:hidden;
+    transition:.4s;
+    z-index:100;
+}
+
+.modal.show{
+    opacity:1;
+    visibility:visible;
+}
+
+.modal-box{
+    width:90%;
+    max-width:430px;
+    background:#111;
+    border:1px solid #333;
+    padding:45px 35px;
+    text-align:center;
+    transform:scale(.8);
+    transition:.4s;
+}
+
+.modal.show .modal-box{
+    transform:scale(1);
+}
+
+.success-icon{
+    width:60px;
+    height:60px;
+    border:1px solid #777;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:0 auto 20px;
+    font-size:25px;
+}
+
+.modal h2{
+    font-family:'Cormorant Garamond',serif;
+    font-size:35px;
+    font-weight:500;
+}
+
+.modal p{
+    color:#777;
+    font-size:12px;
+    line-height:1.7;
+    margin:12px 0 25px;
+}
+
+.modal button{
+    padding:13px 28px;
+    background:#fff;
+    color:#000;
+    border:none;
+    cursor:pointer;
+    font-size:10px;
+    letter-spacing:1px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:900px){
+
+    body{
+        overflow:auto;
+    }
+
+    .container{
+        display:block;
+    }
+
+    .visual{
+        min-height:300px;
+        border-right:none;
+        border-bottom:1px solid #222;
+    }
+
+    .sketch-circle{
+        width:300px;
+        height:300px;
+    }
+
+    .brand{
+        font-size:36px;
+    }
+
+    .form-area{
+        padding:50px 25px;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:auto;
+    }
+
+    .role-options{
+        grid-template-columns:1fr;
+    }
+
+    .form-box h1{
+        font-size:48px;
+    }
+
+    .back-home{
+        left:20px;
+        top:20px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- BACKGROUND -->
+
+<div class="background">
+
+    <div class="glow"></div>
+    <div class="glow2"></div>
+
+    <div class="particle p1"></div>
+    <div class="particle p2"></div>
+    <div class="particle p3"></div>
+    <div class="particle p4"></div>
+    <div class="particle p5"></div>
+    <div class="particle p6"></div>
+
+</div>
+
+
+<!-- BACK -->
+
+<a href="index.html" class="back-home">
+    ← BACK TO HOME
+</a>
+
+
+<div class="container">
+
+
+    <!-- LEFT -->
+
+    <div class="visual">
+
+        <div class="sketch-circle"></div>
+
+        <div class="pencil"></div>
+
+        <div class="visual-content">
+
+            <div class="brand">
+                ART<span>_BY_</span>PRAVEEN
+            </div>
+
+            <div class="tagline">
+                Create • Share • Inspire
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FORM -->
+
+    <div class="form-area">
+
+        <div class="form-box">
+
+            <div class="form-label">
+                JOIN THE ART COMMUNITY
+            </div>
+
+            <h1>
+                Create Account
+            </h1>
+
+            <p class="description">
+                Create your account and start exploring
+                portraits, artworks and creative possibilities.
+            </p>
+
+
+            <div class="form-grid">
+
+
+                <!-- NAME -->
+
+                <div class="input-group">
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder=" "
+                    >
+
+                    <label>
+                        Full Name
+                    </label>
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="input-group">
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        placeholder=" "
+                    >
+
+                    <label>
+                        Phone Number
+                    </label>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="input-group full">
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder=" "
+                    >
+
+                    <label>
+                        Email Address
+                    </label>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="input-group password-wrap">
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder=" "
+                    >
+
+                    <label>
+                        Password
+                    </label>
+
+                    <span
+                        class="show-password"
+                        id="showPassword"
+                        onclick="togglePassword('password','showPassword')"
+                    >
+                        SHOW
+                    </span>
+
+                </div>
+
+
+                <!-- CONFIRM -->
+
+                <div class="input-group password-wrap">
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder=" "
+                    >
+
+                    <label>
+                        Confirm Password
+                    </label>
+
+                    <span
+                        class="show-password"
+                        id="showConfirm"
+                        onclick="togglePassword('confirmPassword','showConfirm')"
+                    >
+                        SHOW
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ROLE -->
+
+            <div class="role-title">
+                I WANT TO
+            </div>
+
+            <div class="role-options">
+
+
+                <div class="role">
+
+                    <input
+                        type="radio"
+                        name="role"
+                        id="artist"
+                        value="artist"
+                    >
+
+                    <label for="artist">
+
+                        <strong>
+                            Become an Artist
+                        </strong>
+
+                        <span>
+                            Upload & sell my artwork
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="role">
+
+                    <input
+                        type="radio"
+                        name="role"
+                        id="customer"
+                        value="customer"
+                        checked
+                    >
+
+                    <label for="customer">
+
+                        <strong>
+                            Explore Art
+                        </strong>
+
+                        <span>
+                            Buy & book portraits
+                        </span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- TERMS -->
+
+            <label class="terms">
+
+                <input
+                    type="checkbox"
+                    id="terms"
+                >
+
+                <span>
+                    I agree to the
+                    <a href="#">Terms & Conditions</a>
+                    and
+                    <a href="#">Privacy Policy</a>.
+                </span>
+
+            </label>
+
+
+            <!-- BUTTON -->
+
+            <button
+                class="signup-btn"
+                onclick="createAccount()"
+            >
+                CREATE MY ACCOUNT
+            </button>
+
+
+            <!-- LOGIN -->
+
+            <div class="login-link">
+
+                Already have an account?
+
+                <a href="login.html">
+                    Login
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- SUCCESS MODAL -->
+
+<div class="modal" id="successModal">
+
+    <div class="modal-box">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h2>
+            Welcome to the Art Community
+        </h2>
+
+        <p id="successText">
+            Your account has been created successfully.
+        </p>
+
+        <button onclick="goToProfile()">
+            CONTINUE
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   PASSWORD TOGGLE
+========================= */
+
+function togglePassword(inputId,buttonId){
+
+    const input =
+        document.getElementById(inputId);
+
+    const button =
+        document.getElementById(buttonId);
+
+    if(input.type === "password"){
+
+        input.type = "text";
+
+        button.textContent = "HIDE";
+
+    }else{
+
+        input.type = "password";
+
+        button.textContent = "SHOW";
+
+    }
+
+}
+
+
+/* =========================
+   CREATE ACCOUNT
+========================= */
+
+function createAccount(){
+
+    const name =
+        document.getElementById("name").value.trim();
+
+    const phone =
+        document.getElementById("phone").value.trim();
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    const confirmPassword =
+        document.getElementById("confirmPassword").value;
+
+    const terms =
+        document.getElementById("terms").checked;
+
+    const artist =
+        document.getElementById("artist").checked;
+
+
+    /* VALIDATION */
+
+    if(name === ""){
+
+        alert("Please enter your full name.");
+        return;
+
+    }
+
+    if(phone === ""){
+
+        alert("Please enter your phone number.");
+        return;
+
+    }
+
+    if(email === ""){
+
+        alert("Please enter your email address.");
+        return;
+
+    }
+
+    if(password.length < 6){
+
+        alert("Password must contain at least 6 characters.");
+        return;
+
+    }
+
+    if(password !== confirmPassword){
+
+        alert("Passwords do not match.");
+        return;
+
+    }
+
+    if(!terms){
+
+        alert("Please accept the Terms & Conditions.");
+        return;
+
+    }
+
+
+    /* ROLE */
+
+    let role = "Art Lover";
+
+    if(artist){
+
+        role = "Artist";
+
+    }
+
+
+    /*
+        Temporary frontend storage.
+
+        Later this will be replaced with
+        a real database/backend.
+    */
+
+    const user = {
+
+        name:name,
+        phone:phone,
+        email:email,
+        role:role
+
+    };
+
+    localStorage.setItem(
+        "artByPraveenUser",
+        JSON.stringify(user)
+    );
+
+    localStorage.setItem(
+    "artByPraveenLoggedIn",
+    "true"
+);
+
+
+    /* SUCCESS */
+
+    document.getElementById("successText").textContent =
+        "Welcome " + name + "! Your " + role +
+        " account has been created successfully.";
+
+    document
+        .getElementById("successModal")
+        .classList.add("show");
+
+}
+
+
+/* =========================
+   CONTINUE
+========================= */
+
+function goToProfile(){
+
+    window.location.href = "index.html";
+
+}
+
+</script>
+
+</body>
+</html>

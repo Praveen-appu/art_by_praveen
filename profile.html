@@ -1,0 +1,3655 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Profile | ART_BY_PRAVEEN</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* =========================
+   RESET
+========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: #050505;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* =========================
+   BACKGROUND
+========================= */
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            top: -250px;
+            left: -200px;
+            background: radial-gradient(circle,
+                    rgba(255, 255, 255, .08),
+                    transparent 65%);
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            right: -180px;
+            bottom: -180px;
+            background: radial-gradient(circle,
+                    rgba(255, 255, 255, .06),
+                    transparent 65%);
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        /* =========================
+   LOADING
+========================= */
+
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: #050505;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: .7s ease;
+        }
+
+        .loader.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-logo {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+        }
+
+        .loader-line {
+            width: 180px;
+            height: 2px;
+            background: #222;
+            overflow: hidden;
+            margin: auto;
+        }
+
+        .loader-line span {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: #fff;
+            animation: loadLine 1.5s forwards;
+        }
+
+        @keyframes loadLine {
+            to {
+                width: 100%;
+            }
+        }
+
+        /* =========================
+   LAYOUT
+========================= */
+
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* =========================
+   SIDEBAR
+========================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #090909;
+            border-right: 1px solid rgba(255, 255, 255, .08);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 19px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            margin-bottom: 55px;
+            padding-left: 10px;
+        }
+
+        .logo span {
+            color: #777;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .menu a {
+            color: #999;
+            text-decoration: none;
+            padding: 14px 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            transition: .3s;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            color: #fff;
+            background: #151515;
+        }
+
+        .menu a.active {
+            box-shadow: inset 3px 0 #fff;
+        }
+
+        .menu-icon {
+            width: 22px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+        .logout {
+            width: 100%;
+            border: 1px solid #252525;
+            background: #111;
+            color: #aaa;
+            padding: 13px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .logout:hover {
+            color: #fff;
+            border-color: #555;
+        }
+
+        /* =========================
+   MAIN
+========================= */
+
+        .main {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+            padding: 35px 45px;
+        }
+
+        /* =========================
+   TOPBAR
+========================= */
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title h1 {
+            font-family: "Playfair Display", serif;
+            font-size: 38px;
+            font-weight: 700;
+        }
+
+        .page-title p {
+            color: #777;
+            font-size: 14px;
+            margin-top: 7px;
+        }
+
+        .top-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar-small {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #fff;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 15px;
+        }
+
+        .top-profile span {
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        /* =========================
+   WELCOME CARD
+========================= */
+
+        .welcome {
+            position: relative;
+            overflow: hidden;
+            min-height: 245px;
+            padding: 38px;
+            border: 1px solid #222;
+            border-radius: 22px;
+            background:
+                linear-gradient(135deg,
+                    #141414,
+                    #080808);
+            margin-bottom: 25px;
+        }
+
+        .welcome::before {
+            content: "";
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            right: -100px;
+            top: -130px;
+            border: 1px solid rgba(255, 255, 255, .07);
+            border-radius: 50%;
+        }
+
+        .welcome::after {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            right: 0;
+            top: -70px;
+            border: 1px solid rgba(255, 255, 255, .05);
+            border-radius: 50%;
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .welcome small {
+            color: #777;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 10px;
+        }
+
+        .welcome h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 42px;
+            margin: 10px 0;
+        }
+
+        .welcome h2 span {
+            color: #888;
+        }
+
+        .welcome p {
+            color: #888;
+            max-width: 560px;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .role-badge {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 14px;
+            border: 1px solid #333;
+            border-radius: 30px;
+            color: #bbb;
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* =========================
+   STATS
+========================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            position: relative;
+            padding: 25px;
+            background: #0c0c0c;
+            border: 1px solid #202020;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: .35s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-6px);
+            border-color: #444;
+        }
+
+        .stat-card::after {
+            content: "";
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            right: -30px;
+            bottom: -30px;
+            border: 1px solid #222;
+            border-radius: 50%;
+        }
+
+        .stat-icon {
+            font-size: 20px;
+            color: #777;
+            margin-bottom: 18px;
+        }
+
+        .stat-card h3 {
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .stat-card p {
+            color: #666;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* =========================
+   CONTENT GRID
+========================= */
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 22px;
+        }
+
+        /* =========================
+   PANEL
+========================= */
+
+        .panel {
+            background: #0b0b0b;
+            border: 1px solid #202020;
+            border-radius: 18px;
+            padding: 27px;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .panel-header h3 {
+            font-size: 17px;
+        }
+
+        .panel-header span {
+            color: #666;
+            font-size: 11px;
+        }
+
+        /* =========================
+   QUICK ACTIONS
+========================= */
+
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 13px;
+        }
+
+        .action {
+            text-decoration: none;
+            color: #fff;
+            padding: 20px;
+            border: 1px solid #202020;
+            border-radius: 13px;
+            background: #101010;
+            transition: .3s;
+        }
+
+        .action:hover {
+            background: #171717;
+            border-color: #444;
+            transform: translateY(-3px);
+        }
+
+        .action-icon {
+            font-size: 24px;
+            margin-bottom: 13px;
+        }
+
+        .action h4 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .action p {
+            color: #666;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        /* =========================
+   PROFILE INFO
+========================= */
+
+        .profile-card {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding-bottom: 25px;
+            margin-bottom: 22px;
+            border-bottom: 1px solid #1c1c1c;
+        }
+
+        .avatar {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background: #fff;
+            color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .profile-info h4 {
+            font-size: 17px;
+        }
+
+        .profile-info p {
+            color: #666;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .details {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .detail {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #161616;
+            padding-bottom: 12px;
+        }
+
+        .detail:last-child {
+            border-bottom: 0;
+        }
+
+        .detail span:first-child {
+            color: #555;
+            font-size: 12px;
+        }
+
+        .detail span:last-child {
+            color: #bbb;
+            font-size: 12px;
+            text-align: right;
+        }
+
+        /* =========================
+   ACTIVITY
+========================= */
+
+        .activity {
+            margin-top: 22px;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 13px;
+            padding: 13px 0;
+            border-bottom: 1px solid #161616;
+        }
+
+        .activity-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #aaa;
+            margin-top: 5px;
+            flex-shrink: 0;
+        }
+
+        .activity-text p {
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .activity-text small {
+            color: #555;
+            font-size: 10px;
+        }
+
+        /* =========================
+   MOBILE MENU
+========================= */
+
+        .mobile-top {
+            display: none;
+        }
+
+        .menu-toggle {
+            width: 42px;
+            height: 42px;
+            background: #111;
+            border: 1px solid #292929;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* =========================
+   ANIMATIONS
+========================= */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(25px);
+            animation: reveal .8s forwards;
+        }
+
+        .delay1 {
+            animation-delay: .15s;
+        }
+
+        .delay2 {
+            animation-delay: .3s;
+        }
+
+        .delay3 {
+            animation-delay: .45s;
+        }
+
+        .delay4 {
+            animation-delay: .6s;
+        }
+
+        @keyframes reveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================
+   RESPONSIVE
+========================= */
+
+        @media(max-width:1100px) {
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width:800px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: .35s;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+                padding: 25px 18px;
+            }
+
+            .mobile-top {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 25px;
+            }
+
+            .mobile-logo {
+                font-weight: 800;
+                letter-spacing: 3px;
+                font-size: 16px;
+            }
+
+            .topbar {
+                display: none;
+            }
+
+            .welcome {
+                padding: 28px 22px;
+            }
+
+            .welcome h2 {
+                font-size: 31px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 18px;
+            }
+
+            .stat-card h3 {
+                font-size: 24px;
+            }
+        }
+
+        @media(max-width:500px) {
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .actions {
+                grid-template-columns: 1fr;
+            }
+
+            .panel {
+                padding: 20px;
+            }
+
+            .welcome {
+                min-height: 220px;
+            }
+
+            .welcome p {
+                font-size: 12px;
+            }
+        }
+
+
+        /* =========================
+   BOOKING NOTIFICATION
+========================= */
+
+        .booking-notification {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .65);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            padding: 20px;
+        }
+
+        .booking-notification.show {
+            display: flex;
+        }
+
+        .booking-notification-card {
+            width: 100%;
+            max-width: 520px;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 18px;
+            padding: 26px;
+            position: relative;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, .7);
+            animation: bookingPopup .3s ease;
+        }
+
+        @keyframes bookingPopup {
+
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+        }
+
+        .booking-notification-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid #333;
+            background: #181818;
+            color: #fff;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .booking-notification-close:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .booking-notification-title {
+            font-family: Georgia, serif;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .booking-notification-id {
+            color: #666;
+            font-size: 10px;
+            margin-bottom: 22px;
+        }
+
+        .booking-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .booking-info {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 9px;
+            padding: 12px;
+        }
+
+        .booking-info.full {
+            grid-column: 1/-1;
+        }
+
+        .booking-info-label {
+            color: #666;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .booking-info-value {
+            color: #eee;
+            font-size: 12px;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+
+        .booking-notification-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #292929;
+            background: #080808;
+        }
+
+        .booking-notification-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #333;
+            border-radius: 20px;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media(max-width:550px) {
+
+            .booking-notification-card {
+                padding: 20px;
+            }
+
+            .booking-info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-info.full {
+                grid-column: auto;
+            }
+
+        }
+
+        /* =========================
+   BOOKING DETAIL LAYOUT
+========================= */
+
+        .booking-detail-layout {
+            display: grid;
+            grid-template-columns: 42% 58%;
+            gap: 22px;
+            align-items: start;
+        }
+
+        .booking-detail-image-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .booking-detail-image {
+            width: 100%;
+            height: 430px;
+            object-fit: cover;
+            display: block;
+            border-radius: 12px;
+            border: 1px solid #292929;
+            background: #080808;
+        }
+
+        .booking-image-caption {
+            position: absolute;
+            left: 20px;
+            /* bottom: 10px; */
+            margin: 15px;
+            
+
+            background: rgba(0, 0, 0, .85);
+            border: 1px solid #333;
+
+            padding: 6px 10px;
+            border-radius: 6px;
+
+            color: #aaa;
+            font-size: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .booking-detail-content {
+            min-width: 0;
+        }
+
+        .booking-detail-title {
+            font-family: Georgia, serif;
+            font-size: 23px;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .booking-detail-id {
+            color: #666;
+            font-size: 10px;
+            margin-bottom: 18px;
+        }
+
+        .booking-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 9px;
+        }
+
+        .booking-info {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 9px;
+            padding: 11px;
+        }
+
+        .booking-info.full {
+            grid-column: 1 / -1;
+        }
+
+        .booking-info-label {
+            color: #666;
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .booking-info-value {
+            color: #eee;
+            font-size: 11px;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+
+        .booking-amount {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+
+        /* =========================
+   MOBILE
+========================= */
+
+        @media(max-width:700px) {
+
+            .booking-detail-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-detail-image {
+                height: 300px;
+            }
+
+        }
+
+        @media(max-width:550px) {
+
+            .booking-info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-info.full {
+                grid-column: auto;
+            }
+
+        }
+
+        /* =========================
+   MY BOOKINGS LIST
+========================= */
+
+        .my-booking-item {
+            background: #0b0b0b;
+            border: 1px solid #252525;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            transition: .25s;
+        }
+
+        .my-booking-item:hover {
+            border-color: #555;
+            background: #131313;
+        }
+
+        .my-booking-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .my-booking-thumb {
+            width: 55px;
+            height: 55px;
+            border-radius: 9px;
+            object-fit: cover;
+            background: #171717;
+            border: 1px solid #292929;
+            flex-shrink: 0;
+        }
+
+        .my-booking-name {
+            font-size: 13px;
+            color: #eee;
+            font-weight: 600;
+        }
+
+        .my-booking-id {
+            color: #666;
+            font-size: 9px;
+            margin-top: 5px;
+        }
+
+        .my-booking-date {
+            color: #555;
+            font-size: 9px;
+            margin-top: 3px;
+        }
+
+        .my-booking-view {
+            border: 1px solid #333;
+            background: #151515;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 10px;
+            white-space: nowrap;
+            transition: .25s;
+        }
+
+        .my-booking-view:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .booking-list-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            font-size: 12px;
+        }
+
+
+        /* MOBILE */
+
+        @media(max-width:550px) {
+
+            .my-booking-item {
+                align-items: flex-start;
+            }
+
+            .my-booking-view {
+                padding: 7px 9px;
+            }
+
+            .my-booking-thumb {
+                width: 48px;
+                height: 48px;
+            }
+
+        }
+
+        /* CANCEL BOOKING */
+
+        .cancel-booking-btn {
+            width: 100%;
+            margin-top: 52px;
+            padding: 13px 16px;
+
+            background: #0b0b0b;
+            color: #ddd;
+
+            border: 1px solid #333;
+            border-radius: 10px;
+
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+
+            cursor: pointer;
+            transition: .3s ease;
+        }
+
+        .cancel-booking-btn:hover {
+            background: #161616;
+            border-color: #777;
+            color: #fff;
+        }
+
+        .cancel-booking-btn.cancelled {
+            color: #777;
+            border-color: #222;
+            cursor: not-allowed;
+            background: #080808;
+        }
+
+        /* CANCEL SUCCESS POPUP */
+
+        .cancel-success-modal{
+            position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+            background:rgba(0,0,0,.82); backdrop-filter:blur(12px); z-index:100000; padding:20px;
+        }
+        .cancel-success-modal.show{display:flex;}
+        .cancel-success-card{
+            width:min(400px,100%); background:#111; border:1px solid #333; border-radius:20px;
+            padding:34px 28px; text-align:center; box-shadow:0 30px 90px rgba(0,0,0,.8);
+            animation:cancelSuccessPop .28s ease;
+        }
+        @keyframes cancelSuccessPop{from{opacity:0;transform:translateY(12px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+        .cancel-success-icon{
+            width:62px;height:62px;margin:0 auto 18px;border:1px solid #555;border-radius:50%;
+            display:flex;align-items:center;justify-content:center;font-size:28px;color:#fff;
+        }
+        .cancel-success-title{font-family:Georgia,serif;font-size:27px;color:#fff;margin-bottom:8px;}
+        .cancel-success-text{color:#888;font-size:11px;line-height:1.7;margin-bottom:22px;}
+        .cancel-success-btn{
+            width:100%;padding:13px 18px;border:1px solid #eee;border-radius:9px;background:#eee;color:#111;
+            font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;cursor:pointer;
+        }
+        .cancel-success-btn:hover{background:#fff;}
+
+        /* CANCEL POP UP */
+
+        .cancel-booking-modal {
+            position: fixed;
+            inset: 0;
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(0, 0, 0, .78);
+            backdrop-filter: blur(10px);
+
+            z-index: 99999;
+            padding: 20px;
+        }
+
+        .cancel-booking-modal.show {
+            display: flex;
+        }
+
+        .cancel-booking-card {
+            position: relative;
+
+            width: min(430px, 100%);
+
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 18px;
+
+            padding: 28px;
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, .7);
+        }
+
+        .cancel-booking-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+
+            width: 34px;
+            height: 34px;
+
+            border-radius: 50%;
+            border: 1px solid #333;
+
+            background: #111;
+            color: #fff;
+
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .cancel-booking-title {
+            font-family: Georgia, serif;
+            font-size: 25px;
+            color: #fff;
+            margin-bottom: 7px;
+        }
+
+        .cancel-booking-subtitle {
+            color: #777;
+            font-size: 10px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .cancel-reason-input {
+            width: 100%;
+            min-height: 120px;
+
+            resize: vertical;
+
+            box-sizing: border-box;
+
+            background: #080808;
+            color: #eee;
+
+            border: 1px solid #292929;
+            border-radius: 10px;
+
+            padding: 14px;
+
+            font-family: inherit;
+            font-size: 12px;
+
+            outline: none;
+        }
+
+        .cancel-reason-input:focus {
+            border-color: #666;
+        }
+
+        .cancel-booking-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+
+            margin-top: 14px;
+        }
+
+        .cancel-no-btn,
+        .cancel-yes-btn {
+            padding: 13px;
+            border-radius: 9px;
+
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+
+            cursor: pointer;
+        }
+
+        .cancel-no-btn {
+            background: #111;
+            color: #aaa;
+            border: 1px solid #333;
+        }
+
+        .cancel-yes-btn {
+            background: #eee;
+            color: #111;
+            border: 1px solid #eee;
+        }
+
+        .cancel-yes-btn:hover {
+            background: #fff;
+        }
+
+        @media(max-width:500px) {
+
+            .cancel-booking-card {
+                padding: 22px;
+            }
+
+            .cancel-booking-actions {
+                grid-template-columns: 1fr;
+            }
+
+        }
+    </style>
+</head>
+
+<!-- =========================
+     MY BOOKINGS
+========================= -->
+
+<div class="booking-notification" id="bookingNotification">
+
+    <div class="booking-notification-card">
+
+        <button class="booking-notification-close" onclick="closeMyBooking()">
+            ×
+        </button>
+
+
+        <div class="booking-notification-title">
+            My Bookings
+        </div>
+
+        <div class="booking-notification-id">
+            Select a booking to view details
+        </div>
+
+
+        <!-- BOOKING LIST -->
+
+        <div id="myBookingsList"></div>
+
+
+        <!-- =====================
+             DETAILS
+        ====================== -->
+
+        <div id="singleBookingDetails" style="display:none;">
+
+            <button onclick="showBookingList()" style="
+            background:none;
+            border:none;
+            color:#888;
+            cursor:pointer;
+            font-size:11px;
+            margin-bottom:18px;
+        ">
+                ← Back to My Bookings
+            </button>
+
+
+            <div class="booking-detail-layout">
+
+
+                <!-- LEFT IMAGE -->
+
+                <div class="booking-detail-image-box">
+
+                    <img id="notifyBookingImage" class="booking-detail-image" src="" alt="Portrait Reference">
+
+                    <div class="booking-image-caption">
+                        Portrait Reference
+                    </div>
+
+                  
+                    <button class="cancel-booking-btn" id="cancelBookingBtn" onclick="openCancelBooking()">
+                        Cancel Order
+                    </button>
+                    
+
+                </div>
+
+
+                <!-- RIGHT DETAILS -->
+
+                <div class="booking-detail-content">
+
+                    <div class="booking-detail-title">
+                        Portrait Booking
+                    </div>
+
+                    <div class="booking-detail-id" id="notifyBookingIdTop">
+                        —
+                    </div>
+
+
+                    <div class="booking-info-grid">
+
+
+                        <!-- NAME -->
+
+                        <div class="booking-info">
+
+                            <div class="booking-info-label">
+                                Name
+                            </div>
+
+                            <div class="booking-info-value" id="notifyName">
+                                —
+                            </div>
+
+                        </div>
+
+
+                        <!-- PHONE -->
+
+                        <div class="booking-info">
+
+                            <div class="booking-info-label">
+                                Phone
+                            </div>
+
+                            <div class="booking-info-value" id="notifyPhone">
+                                —
+                            </div>
+
+                        </div>
+
+
+                        <!-- EMAIL -->
+
+                        <div class="booking-info">
+
+                            <div class="booking-info-label">
+                                Email
+                            </div>
+
+                            <div class="booking-info-value" id="notifyEmail">
+                                —
+                            </div>
+
+                        </div>
+
+
+                        <!-- PENCIL -->
+
+                        <div class="booking-info">
+
+                            <div class="booking-info-label">
+                                Pencil Drawing
+                            </div>
+
+                            <div class="booking-info-value" id="notifyStyle">
+                                —
+                            </div>
+
+                        </div>
+
+
+                        <!-- SIZE -->
+
+                        <div class="booking-info">
+
+                            <div class="booking-info-label">
+                                Size
+                            </div>
+
+                            <div class="booking-info-value" id="notifySize">
+                                —
+                            </div>
+
+                        </div>
+
+
+                        <!-- FRAME -->
+
+                        <div class="booking-info">
+
+                            <div class="booking-info-label">
+                                Frame
+                            </div>
+
+                            <div class="booking-info-value" id="notifyFrame">
+                                —
+                            </div>
+
+                        </div>
+
+
+                        <!-- QUANTITY -->
+
+                        <div class="booking-info">
+
+                            <div class="booking-info-label">
+                                Quantity
+                            </div>
+
+                            <div class="booking-info-value" id="notifyQuantity">
+                                —
+                            </div>
+
+                        </div>
+
+
+                        <!-- DELIVERY -->
+
+                        <div class="booking-info">
+
+                            <div class="booking-info-label">
+                                Delivery
+                            </div>
+
+                            <div class="booking-info-value" id="notifyDelivery">
+                                —
+                            </div>
+
+                        </div>
+
+
+                        <!-- AMOUNT -->
+
+                        <div class="booking-info">
+
+                            <div class="booking-info-label">
+                                Amount
+                            </div>
+
+                            <div class="booking-info-value booking-amount" id="notifyAmount">
+                                ₹0
+                            </div>
+
+                        </div>
+
+
+                        <!-- STATUS -->
+
+                        <div class="booking-info">
+
+                            <div class="booking-info-label">
+                                Status
+                            </div>
+
+                            <div class="booking-info-value" id="notifyStatus">
+                                —
+                            </div>
+
+                        </div>
+
+
+                        <!-- BOOKING ID -->
+
+                        <div class="booking-info full">
+
+                            <div class="booking-info-label">
+                                Booking ID
+                            </div>
+
+                            <div class="booking-info-value" id="notifyBookingId">
+                                —
+                            </div>
+
+                        </div>
+
+
+                        <!-- DESCRIPTION -->
+
+                        <div class="booking-info full">
+
+                            <div class="booking-info-label">
+                                Description
+                            </div>
+
+                            <div class="booking-info-value" id="notifyDescription">
+                                —
+                            </div>
+
+                        </div>
+
+
+                        <!-- ADDRESS -->
+
+                        <div class="booking-info full">
+
+                            <div class="booking-info-label">
+                                Address
+                            </div>
+
+                            <div class="booking-info-value" id="notifyAddress">
+                                —
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<div class="cancel-success-modal" id="cancelSuccessModal">
+    <div class="cancel-success-card">
+        <div class="cancel-success-icon">✓</div>
+        <div class="cancel-success-title">Your Order Has Been Cancelled</div>
+        <div class="cancel-success-text">Your portrait booking has been cancelled successfully. The cancelled order has been removed from your bookings.</div>
+        <button class="cancel-success-btn" onclick="closeCancelSuccess()">Done</button>
+    </div>
+</div>
+
+<div class="cancel-booking-modal" id="cancelBookingModal">
+
+    <div class="cancel-booking-card">
+
+        <button class="cancel-booking-close" onclick="closeCancelBooking()">
+            ×
+        </button>
+
+        <div class="cancel-booking-title">
+            Cancel Order
+        </div>
+
+        <div class="cancel-booking-subtitle">
+            Please tell us why you want to cancel this booking.
+        </div>
+
+        <textarea id="cancelReason" class="cancel-reason-input" placeholder="Enter cancellation reason..."
+            maxlength="300"></textarea>
+
+        <div class="cancel-booking-actions">
+
+            <button class="cancel-no-btn" onclick="closeCancelBooking()">
+                Keep Order
+            </button>
+
+            <button class="cancel-yes-btn" onclick="confirmCancelBooking()">
+                Cancel Order
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<body>
+
+    <!-- =========================
+     LOADER
+========================= -->
+
+    <div class="loader" id="loader">
+
+        <div class="loader-content">
+
+            <div class="loader-logo">
+                ART_BY_PRAVEEN
+            </div>
+
+            <div class="loader-line">
+                <span></span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+     DASHBOARD
+========================= -->
+
+    <div class="dashboard">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="logo">
+                ART<span>_BY_PRAVEEN</span>
+            </div>
+
+            <nav class="menu">
+
+                <a href="index.html">
+                    <span class="menu-icon">⌂</span>
+                    Home
+                </a>
+
+                <a href="profile.html" class="active">
+                    <span class="menu-icon">◉</span>
+                    Dashboard
+                </a>
+
+                <a href="gallery.html">
+                    <span class="menu-icon">▦</span>
+                    Gallery
+                </a>
+
+                <a href="booking.html">
+                    <span class="menu-icon">✦</span>
+                    Book Portrait
+                </a>
+
+                <a href="upload.html">
+                    <span class="menu-icon">＋</span>
+                    Upload Artwork
+                </a>
+
+                <a href="sell.html">
+                    <span class="menu-icon">◇</span>
+                    Sell Artwork
+                </a>
+
+                <a href="contact.html">
+                    <span class="menu-icon">✉</span>
+                    Contact
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <button class="logout" onclick="logout()">
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN -->
+
+        <main class="main">
+
+            <!-- MOBILE TOP -->
+
+            <div class="mobile-top">
+
+                <div class="mobile-logo">
+                    ART_BY_PRAVEEN
+                </div>
+
+                <button class="menu-toggle" onclick="toggleMenu()">
+                    ☰
+                </button>
+
+            </div>
+
+
+            <!-- TOP BAR -->
+
+            <div class="topbar reveal">
+
+                <div class="page-title">
+
+                    <h1>Dashboard</h1>
+
+                    <p>
+                        Your personal art space
+                    </p>
+
+                </div>
+
+                <div class="top-profile">
+
+                    <div class="avatar-small" id="topAvatar">
+                        A
+                    </div>
+
+                    <span id="topName">
+                        Artist
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- WELCOME -->
+
+            <section class="welcome reveal delay1">
+
+                <div class="welcome-content">
+
+                    <small>
+                        Welcome back
+                    </small>
+
+                    <h2>
+                        Hello, <span id="userName">Artist</span>.
+                    </h2>
+
+                    <p id="welcomeText">
+                        Your creative journey starts here.
+                        Manage your artwork, bookings and profile
+                        from one beautiful workspace.
+                    </p>
+
+                    <div class="role-badge" id="roleBadge">
+                        ART LOVER
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- STATS -->
+
+            <section class="stats">
+
+                <div class="stat-card reveal delay1">
+
+                    <div class="stat-icon">
+                        ◇
+                    </div>
+
+                    <h3 id="artCount">
+                        0
+                    </h3>
+
+                    <p>
+                        My Artworks
+                    </p>
+
+                </div>
+
+
+                <div class="stat-card reveal delay2">
+
+                    <div class="stat-icon">
+                        ♡
+                    </div>
+
+                    <h3>
+                        0
+                    </h3>
+
+                    <p>
+                        Wishlist
+                    </p>
+
+                </div>
+
+
+                <div class="stat-card" onclick="openMyBooking()">
+
+                    <div class="stat-icon">
+                        ✦
+                    </div>
+
+                    <h3 id="bookingCount">
+                        0
+                    </h3>
+
+                    <p>
+                        Bookings
+                    </p>
+
+                </div>
+
+
+                <div class="stat-card reveal delay4">
+
+                    <div class="stat-icon">
+                        ₹
+                    </div>
+
+                    <h3>
+                        0
+                    </h3>
+
+                    <p>
+                        Total Sales
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- CONTENT -->
+
+            <section class="content-grid">
+
+
+                <!-- QUICK ACTIONS -->
+
+                <div class="panel reveal delay2">
+
+                    <div class="panel-header">
+
+                        <h3>
+                            Quick Actions
+                        </h3>
+
+                        <span>
+                            EXPLORE
+                        </span>
+
+                    </div>
+
+
+                    <div class="actions">
+
+
+                        <a href="booking.html" class="action">
+
+                            <div class="action-icon">
+                                ✦
+                            </div>
+
+                            <h4>
+                                Book a Portrait
+                            </h4>
+
+                            <p>
+                                Create a personalised pencil portrait.
+                            </p>
+
+                        </a>
+
+
+                        <a href="gallery.html" class="action">
+
+                            <div class="action-icon">
+                                ◇
+                            </div>
+
+                            <h4>
+                                Explore Art
+                            </h4>
+
+                            <p>
+                                Discover original pencil artworks.
+                            </p>
+
+                        </a>
+
+
+                        <a href="upload.html" class="action">
+
+                            <div class="action-icon">
+                                ↑
+                            </div>
+
+                            <h4>
+                                Upload Artwork
+                            </h4>
+
+                            <p>
+                                Add your artwork to your collection.
+                            </p>
+
+                        </a>
+
+
+                        <a href="sell.html" class="action">
+
+                            <div class="action-icon">
+                                ₹
+                            </div>
+
+                            <h4>
+                                Sell Artwork
+                            </h4>
+
+                            <p>
+                                List your artwork for art lovers.
+                            </p>
+
+                        </a>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- PROFILE -->
+
+                <div class="panel reveal delay3">
+
+                    <div class="panel-header">
+
+                        <h3>
+                            My Profile
+                        </h3>
+
+                        <span>
+                            ACCOUNT
+                        </span>
+
+                    </div>
+
+
+                    <div class="profile-card">
+
+                        <div class="avatar" id="mainAvatar">
+                            A
+                        </div>
+
+                        <div class="profile-info">
+
+                            <h4 id="profileName">
+                                Artist
+                            </h4>
+
+                            <p id="profileRole">
+                                Art Lover
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="details">
+
+                        <div class="detail">
+
+                            <span>
+                                Full Name
+                            </span>
+
+                            <span id="detailName">
+                                —
+                            </span>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <span>
+                                Email
+                            </span>
+
+                            <span id="detailEmail">
+                                —
+                            </span>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <span>
+                                Phone
+                            </span>
+
+                            <span id="detailPhone">
+                                —
+                            </span>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <span>
+                                Account Type
+                            </span>
+
+                            <span id="detailRole">
+                                —
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ACTIVITY -->
+
+                    <div class="activity">
+
+                        <div class="panel-header">
+
+                            <h3>
+                                Recent Activity
+                            </h3>
+
+                        </div>
+
+
+                        <div class="activity-item">
+
+                            <div class="activity-dot"></div>
+
+                            <div class="activity-text">
+
+                                <p>
+                                    Account created successfully
+                                </p>
+
+                                <small>
+                                    Just now
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="activity-item">
+
+                            <div class="activity-dot"></div>
+
+                            <div class="activity-text">
+
+                                <p>
+                                    Welcome to ART_BY_PRAVEEN
+                                </p>
+
+                                <small>
+                                    Today
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script>
+
+        const isLoggedIn = localStorage.getItem("artByPraveenLoggedIn");
+
+        if (isLoggedIn !== "true") {
+            window.location.href = "login.html";
+        }
+
+        /* =========================
+           LOADER
+        ========================= */
+
+        window.addEventListener("load", function () {
+
+            setTimeout(function () {
+
+                document
+                    .getElementById("loader")
+                    .classList
+                    .add("hide");
+
+            }, 1200);
+
+        });
+
+
+        /* =========================
+           GET USER DATA
+        ========================= */
+
+        const savedUser =
+            localStorage.getItem("artByPraveenUser");
+
+
+        if (!savedUser) {
+
+            window.location.href = "login.html";
+
+        } else {
+
+            const user =
+                JSON.parse(savedUser);
+
+
+            /* USER NAME */
+
+            const name =
+                user.name || "Artist";
+
+
+            document
+                .getElementById("userName")
+                .textContent = name;
+
+
+            document
+                .getElementById("topName")
+                .textContent = name;
+
+
+            document
+                .getElementById("profileName")
+                .textContent = name;
+
+
+            document
+                .getElementById("detailName")
+                .textContent = name;
+
+
+            /* EMAIL */
+
+            document
+                .getElementById("detailEmail")
+                .textContent =
+                user.email || "Not added";
+
+
+            /* PHONE */
+
+            document
+                .getElementById("detailPhone")
+                .textContent =
+                user.phone || "Not added";
+
+
+            /* ROLE */
+
+            const role =
+                user.role || "Art Lover";
+
+
+            document
+                .getElementById("profileRole")
+                .textContent = role;
+
+
+            document
+                .getElementById("detailRole")
+                .textContent = role;
+
+
+            document
+                .getElementById("roleBadge")
+                .textContent =
+                role;
+
+
+            /* INITIAL */
+
+            const firstLetter =
+                name
+                    .trim()
+                    .charAt(0)
+                    .toUpperCase();
+
+
+            document
+                .getElementById("topAvatar")
+                .textContent =
+                firstLetter;
+
+
+            document
+                .getElementById("mainAvatar")
+                .textContent =
+                firstLetter;
+
+
+            /* ROLE BASED TEXT */
+
+            if (
+                role.toLowerCase()
+                    .includes("artist")
+            ) {
+
+                document
+                    .getElementById("welcomeText")
+                    .textContent =
+                    "Manage your artwork, upload new creations, sell your art and build your artist profile from one creative workspace.";
+
+            } else {
+
+                document
+                    .getElementById("welcomeText")
+                    .textContent =
+                    "Explore beautiful pencil artworks, book personalised portraits and discover your next favourite piece.";
+
+            }
+
+        }
+
+
+        /* =========================
+           MOBILE MENU
+        ========================= */
+
+        function toggleMenu() {
+
+            document
+                .getElementById("sidebar")
+                .classList
+                .toggle("open");
+
+        }
+
+
+        /* =========================
+           LOGOUT
+        ========================= */
+
+        function logout() {
+
+            const confirmLogout =
+                confirm(
+                    "Are you sure you want to logout?"
+                );
+
+            if (confirmLogout) {
+
+                // Remove login status
+                localStorage.removeItem(
+                    "artByPraveenLoggedIn"
+                );
+
+                // Remove user data
+                localStorage.removeItem(
+                    "artByPraveenUser"
+                );
+
+                // Go to login page
+                window.location.href =
+                    "login.html";
+            }
+        }
+
+
+        /* =========================
+           MOUSE PARALLAX
+        ========================= */
+
+        document.addEventListener(
+            "mousemove",
+            function (e) {
+
+                const welcome =
+                    document.querySelector(
+                        ".welcome"
+                    );
+
+                if (!welcome) return;
+
+                const x =
+                    (window.innerWidth / 2 - e.clientX)
+                    / 100;
+
+                const y =
+                    (window.innerHeight / 2 - e.clientY)
+                    / 100;
+
+                welcome.style.transform =
+                    `translate(${x}px, ${y}px)`;
+
+            }
+        );
+
+
+        /* =========================================
+           GET CURRENT USER
+        ========================================= */
+
+        function getCurrentArtUser() {
+
+            try {
+
+                return JSON.parse(
+                    localStorage.getItem(
+                        "artByPraveenUser"
+                    )
+                ) || null;
+
+            } catch (error) {
+
+                return null;
+
+            }
+
+        }
+
+
+        /* =========================================
+           GET MY BOOKINGS
+        ========================================= */
+
+        function getMyArtBookings() {
+
+            let bookings = [];
+
+            try {
+
+                bookings =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "artByPraveenBookings"
+                        )
+                    ) || [];
+
+            } catch (error) {
+
+                bookings = [];
+
+            }
+
+
+            const user =
+                getCurrentArtUser();
+
+
+            if (!user) {
+
+                return [];
+
+            }
+
+
+            const userEmail =
+                String(
+                    user.email || ""
+                )
+                    .toLowerCase()
+                    .trim();
+
+
+            const userPhone =
+                String(
+                    user.phone || ""
+                )
+                    .replace(/\D/g, "");
+
+
+            const userName =
+                String(
+                    user.name || ""
+                )
+                    .toLowerCase()
+                    .trim();
+
+
+            return bookings.filter(
+                booking => {
+
+                    /* Keep cancelled orders in storage for admin,
+                       but hide them from the customer's bookings. */
+                    if (
+                        String(booking.status || "").toLowerCase() ===
+                        "cancelled"
+                    ) {
+                        return false;
+                    }
+
+                    const customer =
+                        booking.customer || {};
+
+
+                    const bookingEmail =
+                        String(
+                            customer.email ||
+                            booking.email ||
+                            ""
+                        )
+                            .toLowerCase()
+                            .trim();
+
+
+                    const bookingPhone =
+                        String(
+                            customer.phone ||
+                            booking.phone ||
+                            ""
+                        )
+                            .replace(/\D/g, "");
+
+
+                    const bookingName =
+                        String(
+                            customer.name ||
+                            booking.name ||
+                            ""
+                        )
+                            .toLowerCase()
+                            .trim();
+
+
+                    return (
+
+                        (
+                            userEmail &&
+                            bookingEmail &&
+                            userEmail === bookingEmail
+                        )
+
+                        ||
+
+                        (
+                            userPhone &&
+                            bookingPhone &&
+                            userPhone === bookingPhone
+                        )
+
+                        ||
+
+                        (
+                            userName &&
+                            bookingName &&
+                            userName === bookingName
+                        )
+
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* =========================================
+           OPEN BOOKINGS
+        ========================================= */
+
+        function openMyBooking() {
+
+            const bookings =
+                getMyArtBookings();
+
+
+            if (bookings.length === 0) {
+
+                alert(
+                    "You don't have any portrait bookings yet."
+                );
+
+                return;
+
+            }
+
+
+            /*
+               Show booking list
+            */
+
+            renderMyBookingList(
+                bookings
+            );
+
+
+            document
+                .getElementById(
+                    "bookingNotification"
+                )
+                .classList.add(
+                    "show"
+                );
+
+        }
+
+
+        /* =========================================
+           RENDER BOOKING LIST
+        ========================================= */
+
+        function renderMyBookingList(bookings) {
+
+            const list =
+                document.getElementById(
+                    "myBookingsList"
+                );
+
+
+            const details =
+                document.getElementById(
+                    "singleBookingDetails"
+                );
+
+
+            /* Hide details */
+
+            details.style.display = "none";
+
+
+            /* Show list */
+
+            list.style.display = "block";
+
+
+            /* No bookings */
+
+            if (!bookings.length) {
+
+                list.innerHTML = `
+
+            <div class="booking-list-empty">
+
+                No portrait bookings found.
+
+            </div>
+
+        `;
+
+                return;
+
+            }
+
+
+            /* Render bookings */
+
+            list.innerHTML = bookings.map(
+                (booking, index) => {
+
+                    const customer =
+                        booking.customer || {};
+
+
+                    const portrait =
+                        booking.portrait || {};
+
+
+                    const image =
+                        portrait.image ||
+                        booking.image ||
+                        "";
+
+
+                    const id =
+                        booking.id ||
+                        booking.bookingId ||
+                        "BOOKING";
+
+
+                    const style =
+                        portrait.style ||
+                        booking.style ||
+                        "Classic Pencil";
+
+
+                    const amount =
+                        booking.pricing?.total ??
+                        booking.total ??
+                        booking.totalPrice ??
+                        booking.amount ??
+                        booking.price ??
+                        booking.finalAmount ??
+                        0;
+
+
+                    const date =
+                        booking.createdAt ||
+                        booking.date ||
+                        booking.bookedAt ||
+                        "";
+
+
+                    return `
+
+                <div
+                    class="my-booking-item"
+                    onclick="viewMyBooking(${index})"
+                    style="cursor:pointer;"
+                >
+
+                    <div class="my-booking-left">
+
+
+                        ${image
+
+                            ?
+
+                            `<img
+                                class="my-booking-thumb"
+                                src="${image}"
+                                alt="Booking"
+                            >`
+
+                            :
+
+                            `<div
+                                class="my-booking-thumb"
+                                style="
+                                    display:flex;
+                                    align-items:center;
+                                    justify-content:center;
+                                    color:#555;
+                                "
+                            >
+                                ✦
+                            </div>`
+                        }
+
+
+                        <div>
+
+                            <div class="my-booking-name">
+
+                                ${escapeBookingHTML(
+                            style
+                        )}
+
+                            </div>
+
+
+                            <div class="my-booking-id">
+
+                                ${escapeBookingHTML(
+                            id
+                        )}
+
+                            </div>
+
+
+                            <div class="my-booking-date">
+
+                                ${date
+                            ?
+                            formatBookingDate(date)
+                            :
+                            ""
+                        }
+
+                                · ₹${Number(
+                            amount
+                        ).toLocaleString("en-IN")}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- NO VIEW BUTTON -->
+
+                    <div
+                        style="
+                            color:#555;
+                            font-size:18px;
+                        "
+                    >
+                        →
+                    </div>
+
+                </div>
+
+            `;
+
+                }
+            ).join("");
+
+        }
+
+
+        /* =========================================
+           VIEW SELECTED BOOKING
+        ========================================= */
+
+        function viewMyBooking(
+            index
+        ) {
+
+            const bookings =
+                getMyArtBookings();
+
+
+            const booking =
+                bookings[index];
+
+
+            if (!booking) {
+
+                return;
+
+            }
+
+
+            showSelectedBooking(
+                booking
+            );
+
+        }
+
+
+        /* =========================================
+           SHOW SELECTED BOOKING
+        ========================================= */
+
+        function showSelectedBooking(booking) {
+
+            if (!booking) {
+                return;
+            }
+
+            /* Keep the selected booking available for Cancel Order */
+            window.currentSelectedBooking = booking;
+
+            /*
+                Different booking versions support cheyyunnu.
+                Amount:
+                booking.total / booking.amount / booking.price
+        
+                Description:
+                booking.specialInstructions / booking.description
+            */
+
+            const customer =
+                booking.customer || {};
+
+            const portrait =
+                booking.portrait || {};
+
+            /*
+               Current booking.html stores these values inside:
+               booking.pricing.total
+               booking.portrait.instructions
+            */
+
+            const amount =
+                booking.pricing?.total ??
+                booking.total ??
+                booking.totalPrice ??
+                booking.amount ??
+                booking.price ??
+                booking.finalAmount ??
+                0;
+
+            const description =
+                portrait.instructions ||
+                booking.specialInstructions ||
+                booking.description ||
+                booking.instructions ||
+                "No special instructions";
+
+            const image =
+                portrait.image ||
+                booking.image ||
+                "";
+
+            const style =
+                portrait.style ||
+                booking.style ||
+                booking.pencilDrawing ||
+                booking.pencil ||
+                "—";
+
+            const size =
+                portrait.size ||
+                booking.size ||
+                "—";
+
+            const frame =
+                portrait.frame ||
+                booking.frame ||
+                "No Frame";
+
+            const quantity =
+                booking.quantity ??
+                portrait.quantity ??
+                1;
+
+            const delivery =
+                portrait.delivery ||
+                booking.delivery ||
+                booking.deliveryType ||
+                "Standard";
+
+            const status =
+                booking.status ||
+                "Pending";
+
+            const bookingId =
+                booking.id ||
+                booking.bookingId ||
+                "—";
+
+            const name =
+                customer.name ||
+                booking.name ||
+                "—";
+
+            const phone =
+                customer.phone ||
+                booking.phone ||
+                "—";
+
+            const email =
+                customer.email ||
+                booking.email ||
+                "—";
+
+            const address =
+                customer.address ||
+                booking.address ||
+                booking.customerAddress ||
+                "—";
+
+
+            /* IMAGE */
+
+            const imageElement =
+                document.getElementById(
+                    "notifyBookingImage"
+                );
+
+            if (imageElement) {
+
+                if (image) {
+
+                    imageElement.src = image;
+
+                    imageElement.style.display =
+                        "block";
+
+                } else {
+
+                    imageElement.removeAttribute(
+                        "src"
+                    );
+
+                }
+            }
+
+
+            /* BASIC DETAILS */
+
+            const setText = (
+                id,
+                value
+            ) => {
+
+                const element =
+                    document.getElementById(id);
+
+                if (element) {
+
+                    element.textContent =
+                        value ?? "—";
+                }
+            };
+
+
+            setText(
+                "notifyBookingId",
+                bookingId
+            );
+
+            setText(
+                "notifyBookingIdTop",
+                bookingId
+            );
+
+            setText(
+                "notifyName",
+                name
+            );
+
+            setText(
+                "notifyPhone",
+                phone
+            );
+
+            setText(
+                "notifyEmail",
+                email
+            );
+
+            setText(
+                "notifyStyle",
+                style
+            );
+
+            setText(
+                "notifySize",
+                size
+            );
+
+            setText(
+                "notifyFrame",
+                frame
+            );
+
+            setText(
+                "notifyQuantity",
+                quantity
+            );
+
+            setText(
+                "notifyDelivery",
+                delivery
+            );
+
+            setText(
+                "notifyStatus",
+                status
+            );
+
+
+            /* AMOUNT */
+
+            const amountElement =
+                document.getElementById(
+                    "notifyAmount"
+                );
+
+            if (amountElement) {
+
+                let numericAmount =
+                    Number(amount);
+
+                if (
+                    !Number.isFinite(
+                        numericAmount
+                    )
+                ) {
+                    numericAmount = 0;
+                }
+
+                amountElement.textContent =
+                    "₹" +
+                    numericAmount.toLocaleString(
+                        "en-IN"
+                    );
+            }
+
+
+            const finalDescription =
+                String(status).toLowerCase() === "cancelled"
+                    ? "Cancellation Reason: " +
+                    (
+                        booking.cancelReason ||
+                        "No reason provided"
+                    )
+                    : description;
+
+            setText(
+                "notifyDescription",
+                finalDescription
+            );
+
+            setText(
+                "notifyAddress",
+                address
+            );
+
+            /* CANCEL BUTTON */
+
+            const cancelButton =
+                document.getElementById(
+                    "cancelBookingBtn"
+                );
+
+            if (cancelButton) {
+
+                if (
+                    String(status)
+                        .toLowerCase() ===
+                    "cancelled"
+                ) {
+
+                    cancelButton.textContent =
+                        "Order Cancelled";
+
+                    cancelButton.classList.add(
+                        "cancelled"
+                    );
+
+                    cancelButton.disabled =
+                        true;
+
+                } else {
+
+                    cancelButton.textContent =
+                        "Cancel Order";
+
+                    cancelButton.classList.remove(
+                        "cancelled"
+                    );
+
+                    cancelButton.disabled =
+                        false;
+                }
+            }
+
+
+            /* SHOW DETAILS */
+
+            const list =
+                document.getElementById(
+                    "myBookingsList"
+                );
+
+            const details =
+                document.getElementById(
+                    "singleBookingDetails"
+                );
+
+            if (list) {
+                list.style.display =
+                    "none";
+            }
+
+            if (details) {
+                details.style.display =
+                    "block";
+            }
+
+        }
+
+
+        /* =========================================
+           BACK TO BOOKING LIST
+        ========================================= */
+
+        function showBookingList() {
+
+            const bookings =
+                getMyArtBookings();
+
+
+            renderMyBookingList(
+                bookings
+            );
+
+        }
+
+
+        /* =========================================
+           CLOSE
+        ========================================= */
+
+        function closeMyBooking() {
+
+            document
+                .getElementById(
+                    "bookingNotification"
+                )
+                .classList.remove(
+                    "show"
+                );
+
+        }
+
+
+        /* =========================================
+           DATE FORMAT
+        ========================================= */
+
+        function formatBookingDate(
+            date
+        ) {
+
+            if (!date) {
+
+                return "—";
+
+            }
+
+
+            try {
+
+                return new Date(
+                    date
+                ).toLocaleDateString(
+                    "en-IN",
+                    {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric"
+                    }
+                );
+
+            } catch (error) {
+
+                return "—";
+
+            }
+
+        }
+
+
+        /* =========================================
+           ESCAPE HTML
+        ========================================= */
+
+        function escapeBookingHTML(
+            value
+        ) {
+
+            return String(value)
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+        /* =========================================
+           CLOSE ON OUTSIDE CLICK
+        ========================================= */
+
+        document
+            .getElementById(
+                "bookingNotification"
+            )
+            .addEventListener(
+                "click",
+                function (event) {
+
+                    if (
+                        event.target === this
+                    ) {
+
+                        closeMyBooking();
+
+                    }
+
+                }
+            );
+
+        /* =========================================
+       UPDATE BOOKING COUNT
+    ========================================= */
+
+        function updateBookingCount() {
+
+            const countElement =
+                document.getElementById(
+                    "bookingCount"
+                );
+
+
+            if (!countElement) {
+
+                return;
+
+            }
+
+
+            const myBookings =
+                getMyArtBookings();
+
+
+            countElement.textContent =
+                myBookings.length;
+
+        }
+
+
+        /* =========================================
+           UPDATE OTHER DASHBOARD COUNTS
+        ========================================= */
+
+        function updateDashboardStats() {
+
+            /* BOOKING COUNT */
+
+            updateBookingCount();
+
+
+            /* ARTWORK COUNT */
+
+            let artworks = [];
+
+            try {
+
+                artworks =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "artByPraveenArtworks"
+                        )
+                    ) || [];
+
+            } catch (error) {
+
+                artworks = [];
+
+            }
+
+
+            const user =
+                getCurrentArtUser();
+
+
+            if (user) {
+
+                const myArtworks =
+                    artworks.filter(
+                        artwork => {
+
+                            return String(
+                                artwork.artist || ""
+                            )
+                                .toLowerCase()
+                                .trim()
+                                ===
+                                String(
+                                    user.name || ""
+                                )
+                                    .toLowerCase()
+                                    .trim();
+
+                        }
+                    );
+
+
+                const artCount =
+                    document.getElementById(
+                        "artCount"
+                    );
+
+
+                if (artCount) {
+
+                    artCount.textContent =
+                        myArtworks.length;
+
+                }
+
+            }
+
+
+            /* WISHLIST */
+
+            let wishlist = [];
+
+            try {
+
+                wishlist =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "artByPraveenWishlist"
+                        )
+                    ) || [];
+
+            } catch (error) {
+
+                wishlist = [];
+
+            }
+
+
+            const statCards =
+                document.querySelectorAll(
+                    ".stat-card"
+                );
+
+
+            if (statCards[1]) {
+
+                const wishlistNumber =
+                    statCards[1].querySelector("h3");
+
+
+                if (wishlistNumber) {
+
+                    wishlistNumber.textContent =
+                        wishlist.length;
+
+                }
+
+            }
+
+        }
+
+
+        /* =========================================
+           RUN WHEN PROFILE LOADS
+        ========================================= */
+
+        window.addEventListener(
+            "load",
+            function () {
+
+                setTimeout(
+                    function () {
+
+                        updateDashboardStats();
+
+                    },
+                    100
+                );
+
+            }
+        );
+
+        // CANCEL FUNCTION
+
+        function openCancelBooking() {
+
+            const booking =
+                window.currentSelectedBooking;
+
+            if (!booking) {
+                return;
+            }
+
+            const status =
+                String(
+                    booking.status || ""
+                ).toLowerCase();
+
+            if (status === "cancelled") {
+                return;
+            }
+
+            const modal =
+                document.getElementById(
+                    "cancelBookingModal"
+                );
+
+            const reason =
+                document.getElementById(
+                    "cancelReason"
+                );
+
+            if (reason) {
+                reason.value = "";
+            }
+
+            if (modal) {
+                modal.classList.add("show");
+            }
+
+            setTimeout(() => {
+
+                if (reason) {
+                    reason.focus();
+                }
+
+            }, 100);
+
+        }
+
+
+        function closeCancelBooking() {
+
+            const modal =
+                document.getElementById(
+                    "cancelBookingModal"
+                );
+
+            if (modal) {
+                modal.classList.remove(
+                    "show"
+                );
+            }
+
+        }
+
+        function confirmCancelBooking() {
+
+            const booking =
+                window.currentSelectedBooking;
+
+            if (!booking) {
+                return;
+            }
+
+            const reasonElement =
+                document.getElementById(
+                    "cancelReason"
+                );
+
+            const reason =
+                reasonElement
+                    ? reasonElement.value.trim()
+                    : "";
+
+            if (!reason) {
+
+                alert(
+                    "Please enter a cancellation reason."
+                );
+
+                if (reasonElement) {
+                    reasonElement.focus();
+                }
+
+                return;
+            }
+
+
+            let bookings = [];
+
+            try {
+
+                bookings =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "artByPraveenBookings"
+                        )
+                    ) || [];
+
+            } catch (error) {
+
+                bookings = [];
+            }
+
+
+            const bookingId =
+                booking.id ||
+                booking.bookingId;
+
+
+            const bookingIndex =
+                bookings.findIndex(
+                    item => {
+
+                        const itemId =
+                            item.id ||
+                            item.bookingId;
+
+                        return (
+                            String(itemId) ===
+                            String(bookingId)
+                        );
+                    }
+                );
+
+
+            if (bookingIndex === -1) {
+
+                alert(
+                    "Booking could not be found."
+                );
+
+                return;
+            }
+
+
+            /*
+                Update booking
+            */
+
+            bookings[bookingIndex].status =
+                "Cancelled";
+
+            bookings[bookingIndex].cancelReason =
+                reason;
+
+            bookings[bookingIndex].cancelledAt =
+                new Date().toISOString();
+
+
+            /*
+                Save
+            */
+
+            localStorage.setItem(
+                "artByPraveenBookings",
+                JSON.stringify(
+                    bookings
+                )
+            );
+
+
+            /*
+                Update current selected booking
+            */
+
+            window.currentSelectedBooking =
+                bookings[bookingIndex];
+
+
+            /*
+                Close reason popup
+            */
+
+            closeCancelBooking();
+
+
+            /*
+                Refresh selected booking details
+            */
+
+            showSelectedBooking(
+                bookings[bookingIndex]
+            );
+
+
+            /*
+                Update dashboard booking list/count
+            */
+
+            if (
+                typeof updateDashboardBookingCount ===
+                "function"
+            ) {
+
+                updateDashboardBookingCount();
+
+            }
+
+
+            /* Update booking count after cancellation.
+               Cancelled bookings are filtered from customer view. */
+            updateBookingCount();
+
+            /* Close My Bookings behind the success message. */
+            const bookingNotification =
+                document.getElementById("bookingNotification");
+
+            if (bookingNotification) {
+                bookingNotification.classList.remove("show");
+            }
+
+            /* Show payment-style success confirmation. */
+            const successModal =
+                document.getElementById("cancelSuccessModal");
+
+            if (successModal) {
+                successModal.classList.add("show");
+            }
+
+        }
+
+
+        function closeCancelSuccess() {
+
+            const successModal =
+                document.getElementById("cancelSuccessModal");
+
+            if (successModal) {
+                successModal.classList.remove("show");
+            }
+
+            window.currentSelectedBooking = null;
+
+        }
+
+    </script>
+
+</body>
+
+</html>
