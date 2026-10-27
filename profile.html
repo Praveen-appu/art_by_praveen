@@ -1439,14 +1439,17 @@
             background: #ddd;
         }
 
-        @media(max-width:550px) {
+        @media (max-width: 550px) {
             .booking-image-lightbox {
                 padding: 10px;
             }
 
             .booking-image-lightbox img {
-                max-width: 98vw;
-                max-height: 82vh;
+                max-width: 96vw;
+                max-height: 80vh;
+                width: auto;
+                height: auto;
+                object-fit: contain;
             }
 
             .booking-image-close {
@@ -1457,7 +1460,7 @@
             .booking-image-download {
                 bottom: 18px;
             }
-        }
+        }   
     </style>
 </head>
 
@@ -3067,6 +3070,7 @@
 
 
             /* IMAGE */
+
 
             const imageElement =
                 document.getElementById(
